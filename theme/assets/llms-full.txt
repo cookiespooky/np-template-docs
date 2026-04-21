@@ -1,0 +1,39 @@
+Notepub Documentation Template - LLM Full Context
+Canonical site: https://<username>.github.io/<repo>/
+Version: 0.1.1
+Last-Updated: 2026-02-10
+
+Scope
+- This file is a compact navigation and retrieval map for LLM indexing.
+- Replace <username> and <repo> with your repository values after creating from template.
+
+Core pages
+- Home: https://<username>.github.io/<repo>/
+- Getting Started: https://<username>.github.io/<repo>/getting-started/
+- Concepts hub: https://<username>.github.io/<repo>/concepts/
+- Authoring hub: https://<username>.github.io/<repo>/authoring/
+- Operations hub: https://<username>.github.io/<repo>/operations/
+- Reference hub: https://<username>.github.io/<repo>/reference/
+
+Task: Onboarding
+1. https://<username>.github.io/<repo>/getting-started/
+2. https://<username>.github.io/<repo>/configuration/
+3. https://<username>.github.io/<repo>/build-and-deploy/
+
+Task: Authoring and structure
+- https://<username>.github.io/<repo>/content-model/
+- https://<username>.github.io/<repo>/links-and-wikilinks/
+
+Task: Operations
+- https://<username>.github.io/<repo>/build-and-deploy/
+- https://<username>.github.io/<repo>/troubleshooting/
+
+Machine-readable endpoints
+- Sitemap index: https://<username>.github.io/<repo>/sitemap-index.xml
+- Robots: https://<username>.github.io/<repo>/robots.txt
+- Search index: https://<username>.github.io/<repo>/search.json
+
+Notes for indexing
+- Keep slugs stable.
+- Keep frontmatter complete (type, slug, title, description).
+- Ensure canonical and base URL are correct in production.

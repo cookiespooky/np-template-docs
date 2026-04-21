@@ -1,0 +1,26 @@
+{{- $related := .Collections.related_pages.Items -}}
+<article class="content">
+  <div class="page-hero">
+    <h1>{{ .Title }}</h1>
+    {{- if .Page.Description }}
+    <p class="lead">{{ .Page.Description }}</p>
+    {{- end }}
+  </div>
+  {{ .Body }}
+</article>
+
+{{- if $related }}
+<section class="section">
+  <h2 class="section-title">Related Materials</h2>
+  <div class="grid grid-3">
+    {{- range $related }}
+    <a class="card card-link" href="{{ printf "%s%s" $.BaseURL .Path }}">
+      <h3>{{ .Title }}</h3>
+      {{- if .Description }}
+      <p>{{ .Description }}</p>
+      {{- end }}
+    </a>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

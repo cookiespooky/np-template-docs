@@ -1,0 +1,210 @@
+version: 1
+
+fields:
+  required: ["type", "slug", "title"]
+  optional: ["description", "draft", "hub", "related", "order", "noindex", "jsonld", "tags"]
+  defaults:
+    draft: false
+
+fm_schema:
+  tags: string[]
+  hub: string[]
+  related: string[]
+  order: number
+  draft: boolean
+  noindex: boolean
+
+types:
+  home:
+    template: "home.html"
+    permalink: "/"
+    include_in:
+      sitemap: true
+      search: false
+
+  page:
+    template: "article.html"
+    permalink: "/{{ slug }}/"
+    include_in:
+      sitemap: true
+      search: true
+
+  article:
+    template: "article.html"
+    permalink: "/{{ slug }}/"
+    include_in:
+      sitemap: true
+      search: true
+
+  hub:
+    template: "hub.html"
+    permalink: "/{{ slug }}/"
+    include_in:
+      sitemap: true
+      search: false
+
+  search:
+    template: "search.html"
+    permalink: "/search/"
+    include_in:
+      sitemap: false
+      search: false
+
+links:
+  - name: "belongs_to"
+    kind: "field"
+    field: "hub"
+    from_types: ["article", "page", "hub"]
+    to_types: ["hub"]
+    to: "slug"
+    inverse: "contains"
+    value_syntax: "auto"
+    resolve:
+      order: ["path", "filename", "slug"]
+      ambiguity: "error"
+      missing: "warn_skip"
+      case: "insensitive"
+
+  - name: "related"
+    kind: "field"
+    field: "related"
+    from_types: ["article", "page"]
+    to_types: ["article", "page"]
+    to: "slug"
+    value_syntax: "auto"
+    resolve:
+      order: ["path", "filename", "slug"]
+      ambiguity: "error"
+      missing: "warn_skip"
+      case: "insensitive"
+
+  - name: "wiki"
+    kind: "wikilinks"
+    from_types: ["home", "page", "article", "hub"]
+    resolve_by: "wikimap"
+    to_types: ["home", "page", "article", "hub"]
+    resolve:
+      order: ["path", "filename", "slug"]
+      ambiguity: "error"
+      missing: "warn_skip"
+      case: "insensitive"
+
+collections:
+  home_page:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["home"]
+    limit: 1
+
+  nav_pages:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["page"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 200
+
+  nav_hubs:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["hub"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 200
+
+  nav_articles_by_hub:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["article"]
+    limit: 2000
+    group_by:
+      by: "fm.hub"
+      multi: true
+      group_sort:
+        dir: "asc"
+      item_sort:
+        by: "fm.order"
+        dir: "asc"
+      item_limit: 200
+
+  hub_items:
+    kind: "backrefs"
+    materialize: false
+    link: "belongs_to"
+    to_slug: "{{ page.slug }}"
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["article", "page"]
+    sort:
+      by: "fm.order"
+      dir: "asc"
+      nulls_last: true
+    limit: 50
+
+  related_pages:
+    kind: "forward"
+    materialize: false
+    link: "related"
+    from_slug: "{{ page.slug }}"
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+    sort:
+      by: "title"
+      dir: "asc"
+      nulls_last: true
+    limit: 12
+
+sitemap:
+  include_types: ["home", "page", "article", "hub"]
+  exclude_drafts: true
+
+search:
+  include_types: ["page", "article"]
+  exclude_drafts: true
+  fields_boost:
+    title: 3
+    description: 2
+    body: 1
+    fm:
+      tags: 1
+  preview:
+    from: "description"
+    max_len: 180
+
+artifacts:
+  collections:
+    enabled: true
+    dir: "collections"
+
+validation:
+  single_page_of_type:
+    home: 1
+    search: 1
+  duplicate_route:
+    action: "error"
+  unknown_type:
+    action: "error"
+  permalink_requires_slug:
+    action: "error"
+  missing_template:
+    action: "error"
+  materialize_requires_limit: true
+  materialize_group_by_requires_item_limit: true

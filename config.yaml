@@ -1,0 +1,33 @@
+site:
+  id: default
+  base_url: "http://127.0.0.1:8080/" # must end with /
+  media_base_url: "http://127.0.0.1:8080/media/"
+  title: "Notepub Docs Template"
+  description: "Template repository for documentation websites powered by Notepub."
+  default_og_image: "/assets/notepub.jpg"
+content:
+  source: "local"
+  local_dir: "./content"
+paths:
+  file_root: ./.notepub
+  artifacts_dir: ./.notepub/artifacts
+  snapshot_file: ./.notepub/snapshot/objects.json
+  cache_root: ./.notepub/cache
+theme:
+  dir: "."
+  name: "theme"
+  templates_subdir: "templates"
+  assets_subdir: "assets"
+rules_path: "./rules.yaml"
+server:
+  listen: "127.0.0.1:8080"
+
+robots:
+  disallow:
+    - "/private/"
+  extra: |
+    # Custom rules here
+
+cache:
+  html_ttl_seconds: 600
+  stale_if_error_seconds: 604800

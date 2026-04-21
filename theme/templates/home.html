@@ -1,0 +1,27 @@
+<section class="page-hero">
+  <h1>{{ .Title }}</h1>
+  {{- if .Page.Description }}
+  <p class="lead">{{ .Page.Description }}</p>
+  {{- end }}
+</section>
+
+<article class="content">
+  {{ .Body }}
+</article>
+
+{{- $hubs := .Collections.nav_hubs.Items -}}
+{{- if $hubs }}
+<section class="section">
+  <h2 class="section-title">Documentation Hubs</h2>
+  <div class="grid grid-3">
+    {{- range $hubs }}
+    <a class="card card-link" href="{{ printf "%s%s" $.BaseURL .Path }}">
+      <h3>{{ .Title }}</h3>
+      {{- if .Description }}
+      <p>{{ .Description }}</p>
+      {{- end }}
+    </a>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

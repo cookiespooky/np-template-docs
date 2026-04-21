@@ -1,0 +1,20 @@
+Notepub Documentation Template
+URL: https://<username>.github.io/<repo>/
+Description: Template repository for documentation sites powered by Notepub.
+Version: 0.1.1
+Last-Updated: 2026-02-10
+
+Primary language: English
+
+Start here:
+- Home: https://<username>.github.io/<repo>/
+- Getting Started: https://<username>.github.io/<repo>/getting-started/
+- Configuration: https://<username>.github.io/<repo>/configuration/
+- Build and Deploy: https://<username>.github.io/<repo>/build-and-deploy/
+
+Machine-readable resources:
+- Sitemap: https://<username>.github.io/<repo>/sitemap-index.xml
+- Robots: https://<username>.github.io/<repo>/robots.txt
+
+For larger context and section map, see:
+- https://<username>.github.io/<repo>/llms-full.txt
