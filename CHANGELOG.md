@@ -6,6 +6,7 @@
 
 - GitHub Pages base URL is now inferred during CI builds, so template users do not need to edit `.np/config.yaml` after creating a repository.
 - GitHub Pages builds now prefer the official `actions/configure-pages` `base_url` output before falling back to `CNAME` or repository-name inference.
+- Production builds now generate `.np/config.resolved.yaml` with resolved site/media URLs so asset links stay correct across older and newer Notepub binaries.
 - Root `CNAME` files are now used to infer custom-domain production URLs and are copied into the Pages artifact.
 - Added responsive video styling so embedded videos fill the content width.
 

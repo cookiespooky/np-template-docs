@@ -7,6 +7,7 @@ artifacts/
 .np/dist/
 .np/bin/
 .np/config.publish.yaml
+.np/config.resolved.yaml
 
 # Local binaries and logs
 notepub

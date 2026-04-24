@@ -74,6 +74,8 @@ The inferred URL is passed to Notepub through environment overrides:
 - `NOTEPUB_BASE_URL`
 - `NOTEPUB_MEDIA_BASE_URL`
 
+When a production URL is available, the build script also writes `.np/config.resolved.yaml` with `site.base_url` and `site.media_base_url` already set. This keeps production asset URLs correct even with older Notepub binaries.
+
 Repository variables with the same names can still override both modes.
 
 ## Config points

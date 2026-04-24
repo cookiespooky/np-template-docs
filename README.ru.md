@@ -73,6 +73,8 @@ URL передается в Notepub через environment override:
 - `NOTEPUB_BASE_URL`
 - `NOTEPUB_MEDIA_BASE_URL`
 
+Когда production URL известен, скрипт сборки также пишет `.np/config.resolved.yaml` с уже заданными `site.base_url` и `site.media_base_url`. Это сохраняет корректные URL ассетов даже со старыми бинарями Notepub.
+
 Repository variables с теми же именами остаются ручным override для обоих режимов.
 
 ## Где настраивать

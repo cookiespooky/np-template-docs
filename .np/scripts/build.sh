@@ -81,6 +81,67 @@ if [[ -n "${NOTEPUB_BASE_URL:-}" && -z "${NOTEPUB_MEDIA_BASE_URL:-}" ]]; then
   export NOTEPUB_MEDIA_BASE_URL="${NOTEPUB_BASE_URL%/}/media/"
 fi
 
+if [[ -n "${NOTEPUB_BASE_URL:-}" ]]; then
+  RESOLVED_CFG="./.np/config.resolved.yaml"
+  mkdir -p "$(dirname "$RESOLVED_CFG")"
+  awk -v base_url="${NOTEPUB_BASE_URL%/}/" \
+      -v media_base_url="${NOTEPUB_MEDIA_BASE_URL%/}/" '
+    BEGIN {
+      in_site = 0
+      seen_site = 0
+      seen_base = 0
+      seen_media = 0
+    }
+    function finish_site() {
+      if (in_site) {
+        if (!seen_base) {
+          print "  base_url: \"" base_url "\" # set by build.sh"
+        }
+        if (!seen_media) {
+          print "  media_base_url: \"" media_base_url "\" # set by build.sh"
+        }
+      }
+      in_site = 0
+    }
+    /^site:[[:space:]]*$/ {
+      finish_site()
+      in_site = 1
+      seen_site = 1
+      seen_base = 0
+      seen_media = 0
+      print
+      next
+    }
+    in_site && /^[A-Za-z_][A-Za-z0-9_]*:/ {
+      finish_site()
+      print
+      next
+    }
+    in_site && /^[[:space:]]*base_url:/ {
+      print "  base_url: \"" base_url "\" # set by build.sh"
+      seen_base = 1
+      next
+    }
+    in_site && /^[[:space:]]*media_base_url:/ {
+      print "  media_base_url: \"" media_base_url "\" # set by build.sh"
+      seen_media = 1
+      next
+    }
+    { print }
+    END {
+      finish_site()
+      if (!seen_site) {
+        print ""
+        print "site:"
+        print "  base_url: \"" base_url "\" # set by build.sh"
+        print "  media_base_url: \"" media_base_url "\" # set by build.sh"
+      }
+    }
+  ' "$CFG" > "$RESOLVED_CFG"
+  CFG="$RESOLVED_CFG"
+  echo "Using resolved build config: $CFG"
+fi
+
 if [[ -z "${NOTEPUB_BIN:-}" && -x "./.np/bin/notepub" ]]; then
   BIN="./.np/bin/notepub"
 fi
