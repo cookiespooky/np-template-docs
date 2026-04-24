@@ -59,7 +59,10 @@ With `runtime.mode: auto`, local serve resolves to dev URLs automatically.
 Workflow `.github/workflows/deploy.yml` builds and deploys automatically.
 
 You do not need to edit `.np/config.yaml` after creating a repository from this template.
-During GitHub Actions builds, `.np/scripts/build.sh` infers the GitHub Pages URL from `GITHUB_REPOSITORY`:
+During GitHub Actions builds, `.np/scripts/build.sh` first checks for a root `CNAME` file.
+If `CNAME` exists, that custom domain becomes the production base URL and is copied into the Pages artifact.
+
+Without `CNAME`, the script infers the GitHub Pages URL from `GITHUB_REPOSITORY`:
 
 - `owner.github.io` -> `https://owner.github.io/`
 - any other repository -> `https://owner.github.io/repository/`
@@ -69,7 +72,7 @@ The inferred URL is passed to Notepub through environment overrides:
 - `NOTEPUB_BASE_URL`
 - `NOTEPUB_MEDIA_BASE_URL`
 
-For a custom domain, set repository variables with the same names.
+Repository variables with the same names can still override both modes.
 
 ## Config points
 

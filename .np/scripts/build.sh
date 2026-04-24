@@ -12,6 +12,39 @@ OUT="./.np/dist"
 CONTENT_DIR="./content"
 MEDIA_DIR="./media"
 
+infer_custom_domain_base_url() {
+  local cname="${ROOT}/CNAME"
+  local domain=""
+
+  if [[ ! -f "$cname" ]]; then
+    return 1
+  fi
+
+  while IFS= read -r line; do
+    line="${line%%#*}"
+    line="${line//$'\r'/}"
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    if [[ -n "$line" ]]; then
+      domain="$line"
+      break
+    fi
+  done < "$cname"
+
+  if [[ -z "$domain" ]]; then
+    return 1
+  fi
+
+  domain="${domain#http://}"
+  domain="${domain#https://}"
+  domain="${domain%%/*}"
+  if [[ -z "$domain" ]]; then
+    return 1
+  fi
+
+  printf 'https://%s/' "$domain"
+}
+
 infer_github_pages_base_url() {
   local repo="${GITHUB_REPOSITORY:-}"
   local owner="${GITHUB_REPOSITORY_OWNER:-}"
@@ -32,7 +65,10 @@ infer_github_pages_base_url() {
 }
 
 if [[ -z "${NOTEPUB_BASE_URL:-}" && "${GITHUB_ACTIONS:-}" == "true" ]]; then
-  if BASE_URL="$(infer_github_pages_base_url)"; then
+  if BASE_URL="$(infer_custom_domain_base_url)"; then
+    export NOTEPUB_BASE_URL="$BASE_URL"
+    echo "Using custom domain URL from CNAME: $NOTEPUB_BASE_URL"
+  elif BASE_URL="$(infer_github_pages_base_url)"; then
     export NOTEPUB_BASE_URL="$BASE_URL"
     echo "Using inferred GitHub Pages URL: $NOTEPUB_BASE_URL"
   fi
@@ -113,6 +149,10 @@ if [[ -d "$MEDIA_DIR" ]]; then
       cp "$f" "$OUT/media/$rel"
     done
   fi
+fi
+
+if [[ -f "./CNAME" ]]; then
+  cp ./CNAME "$OUT/CNAME"
 fi
 
 echo "[5/8] copy llms files"

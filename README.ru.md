@@ -58,7 +58,10 @@ NOTEPUB_BIN=/path/to/notepub /path/to/notepub serve --config ./.np/config.yaml -
 Workflow `.github/workflows/deploy.yml` собирает и деплоит сайт автоматически.
 
 После создания репозитория из шаблона `.np/config.yaml` править не нужно.
-Во время GitHub Actions сборки `.np/scripts/build.sh` вычисляет GitHub Pages URL из `GITHUB_REPOSITORY`:
+Во время GitHub Actions сборки `.np/scripts/build.sh` сначала проверяет корневой файл `CNAME`.
+Если `CNAME` есть, кастомный домен становится production base URL и копируется в Pages artifact.
+
+Без `CNAME` скрипт вычисляет GitHub Pages URL из `GITHUB_REPOSITORY`:
 
 - `owner.github.io` -> `https://owner.github.io/`
 - любой другой репозиторий -> `https://owner.github.io/repository/`
@@ -68,7 +71,7 @@ URL передается в Notepub через environment override:
 - `NOTEPUB_BASE_URL`
 - `NOTEPUB_MEDIA_BASE_URL`
 
-Для кастомного домена задайте repository variables с теми же именами.
+Repository variables с теми же именами остаются ручным override для обоих режимов.
 
 ## Где настраивать
 

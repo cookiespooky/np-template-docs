@@ -5,6 +5,7 @@
 ### Changed
 
 - GitHub Pages base URL is now inferred during CI builds, so template users do not need to edit `.np/config.yaml` after creating a repository.
+- Root `CNAME` files are now used to infer custom-domain production URLs and are copied into the Pages artifact.
 - Added responsive video styling so embedded videos fill the content width.
 
 ## 2026-04-23
