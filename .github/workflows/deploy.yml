@@ -194,6 +194,24 @@ jobs:
               }
             }
           ' "$BUILD_CONFIG" > ./.np/config.publish.yaml
+
+          awk -v base_url="$PUBLISH_BASE_URL" \
+              -v media_base_url="$PUBLISH_MEDIA_BASE_URL" '
+            BEGIN { in_site=0 }
+            /^site:/ { in_site=1; print; next }
+            in_site && /^[A-Za-z_][A-Za-z0-9_]*:/ { in_site=0 }
+            in_site && /^[[:space:]]*base_url:/ {
+              print "  base_url: \"" base_url "\" # set by CI publish step"
+              next
+            }
+            in_site && /^[[:space:]]*media_base_url:/ {
+              print "  media_base_url: \"" media_base_url "\" # set by CI publish step"
+              next
+            }
+            { print }
+          ' ./.np/config.publish.yaml > ./.np/config.publish.tmp.yaml
+          mv ./.np/config.publish.tmp.yaml ./.np/config.publish.yaml
+
           echo "path=./.np/config.publish.yaml" >> "$GITHUB_OUTPUT"
 
       - name: Build site
