@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NOTEPUB_VERSION: v0.1.3
+      NOTEPUB_VERSION: v0.1.4
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
