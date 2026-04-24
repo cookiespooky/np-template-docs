@@ -5,6 +5,9 @@ title: Reference
 description: Detailed configuration and rules reference.
 order: 50
 ---
+
+# Reference
+
 Reference hub for file-level configuration.
 
-Start with [[Configuration]].
+Start with [[Configuration|Configuration]].

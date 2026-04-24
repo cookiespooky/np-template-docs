@@ -1,113 +1,87 @@
-# Шаблон документации Notepub
+# NP Template Docs
 
-Шаблон репозитория для создания и деплоя сайтов документации на Notepub + GitHub Pages.
+Шаблон репозитория документации на Notepub.
 
-## Возможности
+Последние изменения фиксируются в [CHANGELOG.md](./CHANGELOG.md).
 
-- Документация в корне (`/` — главная страница docs)
-- Навигация через хабы (sidebar)
-- Контент в Markdown + frontmatter
-- Страница поиска и модальный поиск
-- Базовое SEO: sitemap, robots, OpenGraph, JSON-LD
-- Брендинг из контента и конфига:
-  - имя бренда в header берется из `content/home.md` (`title`)
-  - логотип бренда берется из `site.default_og_image` в `config.yaml`
-- `llms.txt` и `llms-full.txt` для LLM-индексации
-- GitHub Actions workflow для автодеплоя
+## Структура
 
-## Как использовать шаблон
+- `content/` - пользовательский контент (Markdown)
+- `media/` - опциональные медиа
+- `.np/` - техническая часть (`config`, `rules`, `theme`, `scripts`, output dirs)
+- `.github/workflows/` - CI/CD деплой в GitHub Pages
 
-1. Нажмите **Use this template** в GitHub.
-2. Создайте новый репозиторий.
-3. Пушьте изменения в `main`.
-4. В **Settings -> Pages** выберите источник **GitHub Actions**.
-5. Дождитесь завершения workflow `Deploy Docs Template to GitHub Pages`.
+Формат удобен для Obsidian: основная работа идет в `content/` и `media/`.
 
-Workflow сам вычисляет `base_url` из URL репозитория и публикует `dist/`.
+## Что обновлено под новый движок
 
-## Структура контента
+- из пайплайна убрана перезапись markdown-файлов
+- Obsidian-синтаксис обрабатывается в движке напрямую (`[[...]]`, `![[...]]`, callouts, footnotes, math)
+- markdown-диагностика встроена в локальную сборку и CI (`validate --markdown`)
+- URL-режим переведен на `runtime.mode: dev|prod` вместо патчинга `site.base_url`
 
-- `content/home.md` — главная страница документации (`/`)
-- `content/*.md` — страницы, хабы и статьи
-- немаркдаун-файлы в `content/` считаются медиа и экспортируются в `/media/*`
+## Локальная сборка
 
-Минимальный frontmatter:
+```bash
+./.np/scripts/build.sh
+```
+
+Если нет `.np/bin/notepub`:
+
+```bash
+NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
+```
+
+Скрипт сборки выполняет:
+
+1. генерацию runtime-конфига (опционально, для аналитики)
+2. `notepub validate --links`
+3. `notepub validate --markdown`
+4. `notepub index`
+5. `notepub build`
+
+Результат:
+
+- основной: `.np/dist/`
+- зеркальный: `dist/`
+
+## Локальный предпросмотр
+
+```bash
+./.np/scripts/preview.sh
+```
+
+Свой порт:
+
+```bash
+./.np/scripts/preview.sh 8080
+```
+
+`preview.sh` генерирует временный конфиг с `runtime.mode=dev` и локальным `runtime.dev.base_url`.
+
+## Деплой
+
+Workflow `.github/workflows/deploy.yml` собирает и деплоит сайт автоматически.
+
+URL для GitHub Pages вычисляется в workflow и подставляется в временный publish-конфиг через `runtime.prod.*`.
+
+## Где настраивать
+
+- конфиг сайта/runtime: `.np/config.yaml`
+- правила роутинга/модели: `.np/rules.yaml`
+- шаблоны/ассеты: `.np/theme/`
+- контент футера: `content/footer.md`
+
+## Опциональная аналитика
+
+В `.np/config.yaml`:
 
 ```yaml
-type: article
-slug: configuration
-title: Configuration
-description: Key settings in config.yaml and rules.yaml.
-hub: [reference]
-order: 10
+site:
+  analytics:
+    enabled: false
+    provider: "yandex_metrika"
+    yandex_counter_id: ""
 ```
 
-## Локальная разработка
-
-Рекомендуемая версия движка (как в CI):
-
-`NOTEPUB_VERSION=v0.1.3`
-
-Скачайте бинарник `notepub` из GitHub Releases:
-
-macOS (Apple Silicon):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_darwin_arm64"
-chmod +x ./notepub
-```
-
-macOS (Intel):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_darwin_amd64"
-chmod +x ./notepub
-```
-
-Linux (amd64):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_linux_amd64"
-chmod +x ./notepub
-```
-
-Windows (PowerShell):
-
-```powershell
-Invoke-WebRequest -Uri "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_windows_amd64.exe" -OutFile ".\\notepub.exe"
-```
-
-Сборка через helper-скрипт (macOS/Linux или Windows через Git Bash/WSL):
-
-```bash
-NOTEPUB_BIN=./notepub ./scripts/build.sh
-```
-
-Поддерживаются Obsidian image-embed:
-
-- вход: `![[cover.webp]]`
-- нормализация: `![](/media/cover.webp)`
-- экспорт: `dist/media/cover.webp`
-
-Сборка на Windows без `bash`:
-
-```powershell
-.\notepub.exe index --config .\config.yaml --rules .\rules.yaml
-.\notepub.exe build --config .\config.yaml --rules .\rules.yaml --artifacts .\.notepub\artifacts --dist .\dist
-```
-
-Локальный запуск статики:
-
-```bash
-python3 -m http.server 9000 -d dist
-```
-
-Откройте: `http://127.0.0.1:9000/`
-
-## Что поменять после создания репозитория из шаблона
-
-- `site.title` и `site.description` в `config.yaml`
-- `site.media_base_url` в `config.yaml` (локально по умолчанию: `http://127.0.0.1:8080/media/`)
-- `content/home.md` -> `title` (имя бренда в header)
-- `site.default_og_image` в `config.yaml` (логотип бренда и дефолт OG image)
-- плейсхолдеры в `theme/assets/llms.txt` и `theme/assets/llms-full.txt` (`<username>`, `<repo>`)
+При `enabled: true` runtime JS-конфиг генерируется на сборке и подключается на фронтенде.

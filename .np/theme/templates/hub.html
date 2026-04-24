@@ -1,11 +1,4 @@
 {{- $hubItems := .Collections.hub_items.Items -}}
-<section class="page-hero">
-  <h1>{{ .Title }}</h1>
-  {{- if .Page.Description }}
-  <p class="lead">{{ .Page.Description }}</p>
-  {{- end }}
-</section>
-
 <article class="content">
   {{ .Body }}
 </article>
@@ -16,9 +9,6 @@
   <div class="grid grid-3">
     {{- range $hubItems }}
     <a class="card card-link" href="{{ printf "%s%s" $.BaseURL .Path }}">
-      <div class="card-meta">
-        <span class="card-tag">{{ .Type }}</span>
-      </div>
       <h3>{{ .Title }}</h3>
       {{- if .Description }}
       <p>{{ .Description }}</p>

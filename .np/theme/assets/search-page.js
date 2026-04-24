@@ -53,6 +53,17 @@
     state.input.addEventListener('keydown', onKeyDown);
 
     var initial = state.input.value.trim();
+    if (!initial) {
+      try {
+        var urlQuery = new URLSearchParams(window.location.search || '').get('q') || '';
+        initial = urlQuery.trim();
+      } catch (_err) {
+        initial = '';
+      }
+    }
+    if (initial && state.input.value.trim() !== initial) {
+      state.input.value = initial;
+    }
     if (initial.length >= 2) {
       search(initial);
     }

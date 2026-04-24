@@ -1,5 +1,8 @@
+<article class="content">
+  {{ .Body }}
+</article>
+
 <section class="section search-page">
-  <h1 class="section-title">Search</h1>
   <form class="np-search-page-form" method="get" action="{{ .BaseURL }}/search">
     <input type="search" name="q" value="{{ .SearchQuery }}" placeholder="Search documentation" autocomplete="off" />
   </form>
@@ -50,6 +53,19 @@
     };
     document.head.appendChild(s);
   }
-  input.addEventListener('focus', load, { once: true });
+
+  var hasInitialQuery = false;
+  try {
+    var q = new URLSearchParams(window.location.search || '').get('q');
+    hasInitialQuery = !!(q && q.trim().length);
+  } catch (_err) {
+    hasInitialQuery = false;
+  }
+
+  if ((input.value && input.value.trim().length) || hasInitialQuery) {
+    load();
+  } else {
+    input.addEventListener('focus', load, { once: true });
+  }
 })();
 </script>

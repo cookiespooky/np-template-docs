@@ -1,11 +1,14 @@
 .DS_Store
 
-# Build outputs
+# Build outputs and caches
+.notepub/
 dist/
 artifacts/
-.notepub/
+.np/dist/
+.np/bin/
+.np/config.publish.yaml
 
-# Local binaries and caches
+# Local binaries and logs
 notepub
 *.log
 

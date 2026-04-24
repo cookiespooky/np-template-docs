@@ -5,9 +5,12 @@ title: Getting Started
 description: Quick setup from template to first deploy.
 order: 10
 related:
-  - "[[configuration]]"
-  - "[[build-and-deploy]]"
+  - "configuration"
+  - "build-and-deploy"
 ---
+
+# Getting Started
+
 Create your own docs site in minutes:
 
 1. Click **Use this template** on GitHub.
@@ -17,5 +20,5 @@ Create your own docs site in minutes:
 
 Next steps:
 
-- [[Configuration]]
-- [[Build and Deploy]]
+- [[Configuration|Configuration]]
+- [[Build and Deploy|Build and Deploy]]

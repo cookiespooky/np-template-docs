@@ -1,125 +1,85 @@
-# Notepub Documentation Template
+# NP Template Docs
 
-Template repository for building and deploying documentation websites with Notepub and GitHub Pages.
+Template repository for documentation websites powered by Notepub.
 
-## Features
+Recent changes are tracked in [CHANGELOG.md](./CHANGELOG.md).
 
-- Docs-first structure (`/` is the documentation home page)
-- Hub-based sidebar navigation
-- Markdown + frontmatter content model
-- Search page and search modal
-- SEO/metadata defaults (sitemap, robots, OpenGraph, JSON-LD)
-- Branding from content/config:
-  `content/home.md` frontmatter `title` is used as the header brand name,
-  `site.default_og_image` in `config.yaml` is used as the header brand logo
-- `llms.txt` and `llms-full.txt` for LLM indexing
-- GitHub Actions workflow for automatic deploy
+## Repository structure
 
-## Use This Template
+- `content/` - user content (Markdown)
+- `media/` - optional media files
+- `.np/` - technical workspace (`config`, `rules`, `theme`, `scripts`, output dirs)
+- `.github/workflows/` - CI/CD deploy to GitHub Pages
 
-1. Click **Use this template** in GitHub.
-2. Create a new repository.
-3. Push changes to `main`.
-4. Open **Settings -> Pages** and ensure source is **GitHub Actions**.
-5. Wait for the `Deploy Docs Template to GitHub Pages` workflow to finish.
+This layout is Obsidian-friendly: users mostly edit `content/` and `media/`.
 
-The workflow computes `base_url` from your repository URL and deploys `dist/` automatically.
+## What changed (engine-aligned)
 
-## Content Structure
+- no source markdown rewrite step in build pipeline
+- Obsidian syntax handled directly by engine (`[[...]]`, `![[...]]`, callouts, footnotes, math)
+- markdown diagnostics integrated into local and CI builds (`validate --markdown`)
+- URL mode handled by runtime resolver (`runtime.mode: auto|dev|prod`)
+- `preview.sh` removed; local preview uses standard `notepub serve`
 
-- `content/home.md` - documentation home page (route `/`)
-- `content/*.md` - pages, hubs, and articles
-- non-markdown files in `content/` are treated as media and exported to `/media/*`
+## Local build
 
-Minimal frontmatter example:
+```bash
+./.np/scripts/build.sh
+```
+
+If `.np/bin/notepub` is missing:
+
+```bash
+NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
+```
+
+The build script runs:
+
+1. runtime config generation (optional analytics JS config)
+2. `notepub index`
+3. `notepub validate --links`
+4. `notepub validate --markdown`
+5. `notepub build`
+
+Output:
+
+- primary: `.np/dist/`
+- mirror: `dist/`
+
+## Local serve (preview)
+
+```bash
+NOTEPUB_BIN=/path/to/notepub /path/to/notepub serve --config ./.np/config.yaml --rules ./.np/rules.yaml
+```
+
+With `runtime.mode: auto`, local serve resolves to dev URLs automatically.
+
+## Deploy
+
+Workflow `.github/workflows/deploy.yml` builds and deploys automatically.
+
+The workflow computes GitHub Pages URL and passes it as environment overrides:
+
+- `NOTEPUB_BASE_URL`
+- `NOTEPUB_MEDIA_BASE_URL`
+
+## Config points
+
+- site/runtime config: `.np/config.yaml`
+- routing/model rules: `.np/rules.yaml`
+- templates/assets: `.np/theme/`
+- footer content page: `content/footer.md`
+
+## Optional analytics flag
+
+In `.np/config.yaml`:
 
 ```yaml
-type: article
-slug: configuration
-title: Configuration
-description: Key settings in config.yaml and rules.yaml.
-hub: [reference]
-order: 10
+site:
+  analytics:
+    enabled: false
+    provider: "yandex_metrika"
+    yandex_counter_id: ""
 ```
 
-## Local Development
-
-Recommended local setup uses the same pinned release version as CI:
-
-`NOTEPUB_VERSION=v0.1.3`
-
-Download `notepub` binary from GitHub Releases:
-
-macOS (Apple Silicon):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_darwin_arm64"
-chmod +x ./notepub
-```
-
-macOS (Intel):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_darwin_amd64"
-chmod +x ./notepub
-```
-
-Linux (amd64):
-
-```bash
-curl -L -o ./notepub "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_linux_amd64"
-chmod +x ./notepub
-```
-
-Windows (PowerShell):
-
-```powershell
-Invoke-WebRequest -Uri "https://github.com/cookiespooky/notepub/releases/download/v0.1.3/notepub_windows_amd64.exe" -OutFile ".\\notepub.exe"
-```
-
-Release artifacts also include:
-
-- `notepub_linux_arm64`
-- `notepub_darwin_amd64`
-- `checksums.txt`
-
-Build with helper script (macOS/Linux, or Windows with Git Bash/WSL):
-
-```bash
-NOTEPUB_BIN=./notepub ./scripts/build.sh
-```
-
-Obsidian-style image embeds are supported in CI and local scripts:
-
-- input: `![[cover.webp]]`
-- normalized: `![](/media/cover.webp)`
-- static export: `dist/media/cover.webp`
-
-Build on Windows without `bash`:
-
-```powershell
-.\notepub.exe index --config .\config.yaml --rules .\rules.yaml
-.\notepub.exe build --config .\config.yaml --rules .\rules.yaml --artifacts .\.notepub\artifacts --dist .\dist
-```
-
-Serve static output:
-
-```bash
-python3 -m http.server 9000 -d dist
-```
-
-Open: `http://127.0.0.1:9000/`
-
-Versioning rule:
-
-- Keep README commands and `.github/workflows/deploy.yml` `NOTEPUB_VERSION` on the same release tag.
-
-## Template Notes
-
-After creating your own repo from this template, update these values:
-
-- `site.title` and `site.description` in `config.yaml`
-- `site.media_base_url` in `config.yaml` (local default: `http://127.0.0.1:8080/media/`)
-- `content/home.md` -> `title` (shown as brand name in header)
-- `site.default_og_image` in `config.yaml` (used as brand logo in header and default OG image)
-- `theme/assets/llms.txt` and `theme/assets/llms-full.txt` placeholders (`<username>`, `<repo>`)
+When enabled, runtime config JS is generated during build and injected by frontend code.

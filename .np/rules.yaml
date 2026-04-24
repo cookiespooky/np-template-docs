@@ -50,6 +50,13 @@ types:
       sitemap: false
       search: false
 
+  footer:
+    template: "page.html"
+    permalink: "/footer/"
+    include_in:
+      sitemap: false
+      search: false
+
 links:
   - name: "belongs_to"
     kind: "field"
@@ -80,9 +87,9 @@ links:
 
   - name: "wiki"
     kind: "wikilinks"
-    from_types: ["home", "page", "article", "hub"]
+    from_types: ["home", "page", "article", "hub", "footer"]
     resolve_by: "wikimap"
-    to_types: ["home", "page", "article", "hub"]
+    to_types: ["home", "page", "article", "hub", "footer"]
     resolve:
       order: ["path", "filename", "slug"]
       ambiguity: "error"
@@ -143,6 +150,24 @@ collections:
         dir: "asc"
       item_limit: 200
 
+  nav_items_by_hub:
+    kind: "filter"
+    materialize: false
+    where:
+      all:
+        - fm_eq: { key: "draft", value: false }
+        - type_in: ["hub", "article", "page"]
+    limit: 2000
+    group_by:
+      by: "fm.hub"
+      multi: true
+      group_sort:
+        dir: "asc"
+      item_sort:
+        by: "fm.order"
+        dir: "asc"
+      item_limit: 200
+
   hub_items:
     kind: "backrefs"
     materialize: false
@@ -151,7 +176,7 @@ collections:
     where:
       all:
         - fm_eq: { key: "draft", value: false }
-        - type_in: ["article", "page"]
+        - type_in: ["hub", "article", "page"]
     sort:
       by: "fm.order"
       dir: "asc"
@@ -201,6 +226,8 @@ validation:
   duplicate_route:
     action: "error"
   unknown_type:
+    action: "error"
+  unique_slug:
     action: "error"
   permalink_requires_slug:
     action: "error"

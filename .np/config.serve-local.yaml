@@ -1,0 +1,39 @@
+site:
+  id: np-template-docs
+  base_url: "http://127.0.0.1:8080/" # production fallback if runtime.prod is not set
+  media_base_url: "http://127.0.0.1:8080/media/" # production fallback if runtime.prod is not set
+  title: "Notepub Docs Template"
+  description: "Template repository for documentation websites powered by Notepub."
+  default_og_image: "/assets/notepub.jpg"
+  analytics:
+    enabled: false
+    provider: "yandex_metrika"
+    yandex_counter_id: ""
+
+runtime:
+  mode: "dev" # dev|prod
+  dev:
+    base_url: "http://127.0.0.1:8080/"
+    media_base_url: "http://127.0.0.1:8080/media/"
+  # prod:
+  #   base_url: "https://docs.example.com/"
+  #   media_base_url: "https://docs.example.com/media/"
+content:
+  source: "local"
+  local_dir: "../content"
+paths:
+  file_root: ./.notepub
+  artifacts_dir: ./.notepub/artifacts
+  snapshot_file: ./.notepub/snapshot/objects.json
+  cache_root: ./.notepub/cache
+theme:
+  dir: "./.np"
+  name: "theme"
+  templates_subdir: "templates"
+  assets_subdir: "assets"
+rules_path: "./.np/rules.yaml"
+server:
+  listen: "127.0.0.1:18080"
+cache:
+  html_ttl_seconds: 600
+  stale_if_error_seconds: 604800

@@ -4,16 +4,19 @@ slug: links-and-wikilinks
 title: Links and Wikilinks
 description: Internal linking patterns and wiki-style references.
 hub:
-  - "[[authoring]]"
+  - "authoring"
 order: 10
 related:
-  - "[[content-model]]"
+  - "content-model"
 ---
+
+# Links and Wikilinks
+
 Use regular markdown links or wikilinks for cross-page navigation.
 
 Examples:
 
 - `[Configuration](/configuration/)`
-- `[[Configuration]]`
+- `[[Configuration|Configuration]]`
 
 Keep slugs stable to avoid broken links.

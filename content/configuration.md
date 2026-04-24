@@ -4,18 +4,27 @@ slug: configuration
 title: Configuration
 description: Key settings in config.yaml and rules.yaml.
 hub:
-  - "[[reference]]"
+  - "reference"
 order: 10
 related:
-  - "[[build-and-deploy]]"
-  - "[[content-model]]"
+  - "build-and-deploy"
+  - "content-model"
 ---
-`config.yaml` controls source, paths, theme, and server settings.
+
+# Configuration
+
+`config.yaml` controls:
+
+- site metadata
+- runtime URL mode (`runtime.mode`, `runtime.dev`, `runtime.prod`)
+- content source and paths
+- theme and server settings
+- markdown policy and cache behavior
 
 `rules.yaml` controls:
 
 - content types
 - routes
-- links
+- links extraction and resolution
 - collections
 - search and sitemap behavior
