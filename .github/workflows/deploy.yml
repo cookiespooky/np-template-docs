@@ -159,9 +159,46 @@ jobs:
           echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
           echo "media_base_url=$MEDIA_BASE_URL" >> "$GITHUB_OUTPUT"
 
+      - name: Prepare publish config (runtime.prod)
+        id: publishcfg
+        env:
+          BUILD_CONFIG: ${{ steps.buildcfg.outputs.path }}
+          PUBLISH_BASE_URL: ${{ steps.pagesurls.outputs.base_url }}
+          PUBLISH_MEDIA_BASE_URL: ${{ steps.pagesurls.outputs.media_base_url }}
+        run: |
+          awk -v base_url="$PUBLISH_BASE_URL" \
+              -v media_base_url="$PUBLISH_MEDIA_BASE_URL" '
+            BEGIN { in_runtime=0; replaced_runtime=0 }
+            /^runtime:/ {
+              print "runtime:"
+              print "  mode: \"prod\""
+              print "  prod:"
+              print "    base_url: \"" base_url "\""
+              print "    media_base_url: \"" media_base_url "\""
+              in_runtime=1
+              replaced_runtime=1
+              next
+            }
+            in_runtime && /^[A-Za-z_][A-Za-z0-9_]*:/ {
+              in_runtime=0
+            }
+            !in_runtime { print }
+            END {
+              if (!replaced_runtime) {
+                print ""
+                print "runtime:"
+                print "  mode: \"prod\""
+                print "  prod:"
+                print "    base_url: \"" base_url "\""
+                print "    media_base_url: \"" media_base_url "\""
+              }
+            }
+          ' "$BUILD_CONFIG" > ./.np/config.publish.yaml
+          echo "path=./.np/config.publish.yaml" >> "$GITHUB_OUTPUT"
+
       - name: Build site
         env:
-          NOTEPUB_CONFIG: ${{ steps.buildcfg.outputs.path }}
+          NOTEPUB_CONFIG: ${{ steps.publishcfg.outputs.path }}
           NOTEPUB_BASE_URL: ${{ steps.pagesurls.outputs.base_url }}
           NOTEPUB_MEDIA_BASE_URL: ${{ steps.pagesurls.outputs.media_base_url }}
         run: ./.np/scripts/build.sh
