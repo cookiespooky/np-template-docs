@@ -11,12 +11,8 @@ site:
     yandex_counter_id: ""
 
 runtime:
-  mode: "auto" # auto|dev|prod
-  dev:
-    base_url: "http://127.0.0.1:8080/"
-    media_base_url: "http://127.0.0.1:8080/media/"
-  # Production URLs are normally inferred in GitHub Actions.
-  # Add a root CNAME file for a custom domain, or set NOTEPUB_BASE_URL / NOTEPUB_MEDIA_BASE_URL.
+  # auto keeps local builds on 127.0.0.1 and lets CI inject production URLs.
+  mode: "auto"
 content:
   source: "local"
   local_dir: "../content"
