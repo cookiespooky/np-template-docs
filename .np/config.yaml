@@ -1,7 +1,7 @@
 site:
   id: np-template-docs
-  base_url: "http://127.0.0.1:8080/" # production fallback if runtime.prod is not set
-  media_base_url: "http://127.0.0.1:8080/media/" # production fallback if runtime.prod is not set
+  base_url: "http://127.0.0.1:8080/" # local fallback; CI injects the GitHub Pages URL automatically
+  media_base_url: "http://127.0.0.1:8080/media/" # local fallback; CI injects the GitHub Pages media URL automatically
   title: "Notepub Docs Template"
   description: "Template repository for documentation websites powered by Notepub."
   default_og_image: "/assets/notepub.jpg"
@@ -15,9 +15,8 @@ runtime:
   dev:
     base_url: "http://127.0.0.1:8080/"
     media_base_url: "http://127.0.0.1:8080/media/"
-  # prod:
-  #   base_url: "https://docs.example.com/"
-  #   media_base_url: "https://docs.example.com/media/"
+  # Production URLs are normally inferred in GitHub Actions.
+  # For a custom domain, set repository variables NOTEPUB_BASE_URL and NOTEPUB_MEDIA_BASE_URL.
 content:
   source: "local"
   local_dir: "../content"

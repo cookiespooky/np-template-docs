@@ -142,83 +142,11 @@ jobs:
           curl -L -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
           chmod +x ./.np/bin/notepub
 
-      - name: Compute GitHub Pages URLs
-        id: pagesurls
-        env:
-          BUILD_CONFIG: ${{ steps.buildcfg.outputs.path }}
-        run: |
-          OWNER="${GITHUB_REPOSITORY_OWNER}"
-          REPO="${GITHUB_REPOSITORY#*/}"
-          if [ "$REPO" = "${OWNER}.github.io" ]; then
-            BASE_URL="https://${OWNER}.github.io/"
-          else
-            BASE_URL="https://${OWNER}.github.io/${REPO}/"
-          fi
-          MEDIA_BASE_URL="${BASE_URL}media/"
-          echo "Using BASE_URL=$BASE_URL"
-          echo "base_url=$BASE_URL" >> "$GITHUB_OUTPUT"
-          echo "media_base_url=$MEDIA_BASE_URL" >> "$GITHUB_OUTPUT"
-
-      - name: Prepare publish config (runtime.prod)
-        id: publishcfg
-        env:
-          BUILD_CONFIG: ${{ steps.buildcfg.outputs.path }}
-          PUBLISH_BASE_URL: ${{ steps.pagesurls.outputs.base_url }}
-          PUBLISH_MEDIA_BASE_URL: ${{ steps.pagesurls.outputs.media_base_url }}
-        run: |
-          awk -v base_url="$PUBLISH_BASE_URL" \
-              -v media_base_url="$PUBLISH_MEDIA_BASE_URL" '
-            BEGIN { in_runtime=0; replaced_runtime=0 }
-            /^runtime:/ {
-              print "runtime:"
-              print "  mode: \"prod\""
-              print "  prod:"
-              print "    base_url: \"" base_url "\""
-              print "    media_base_url: \"" media_base_url "\""
-              in_runtime=1
-              replaced_runtime=1
-              next
-            }
-            in_runtime && /^[A-Za-z_][A-Za-z0-9_]*:/ {
-              in_runtime=0
-            }
-            !in_runtime { print }
-            END {
-              if (!replaced_runtime) {
-                print ""
-                print "runtime:"
-                print "  mode: \"prod\""
-                print "  prod:"
-                print "    base_url: \"" base_url "\""
-                print "    media_base_url: \"" media_base_url "\""
-              }
-            }
-          ' "$BUILD_CONFIG" > ./.np/config.publish.yaml
-
-          awk -v base_url="$PUBLISH_BASE_URL" \
-              -v media_base_url="$PUBLISH_MEDIA_BASE_URL" '
-            BEGIN { in_site=0 }
-            /^site:/ { in_site=1; print; next }
-            in_site && /^[A-Za-z_][A-Za-z0-9_]*:/ { in_site=0 }
-            in_site && /^[[:space:]]*base_url:/ {
-              print "  base_url: \"" base_url "\" # set by CI publish step"
-              next
-            }
-            in_site && /^[[:space:]]*media_base_url:/ {
-              print "  media_base_url: \"" media_base_url "\" # set by CI publish step"
-              next
-            }
-            { print }
-          ' ./.np/config.publish.yaml > ./.np/config.publish.tmp.yaml
-          mv ./.np/config.publish.tmp.yaml ./.np/config.publish.yaml
-
-          echo "path=./.np/config.publish.yaml" >> "$GITHUB_OUTPUT"
-
       - name: Build site
         env:
-          NOTEPUB_CONFIG: ${{ steps.publishcfg.outputs.path }}
-          NOTEPUB_BASE_URL: ${{ steps.pagesurls.outputs.base_url }}
-          NOTEPUB_MEDIA_BASE_URL: ${{ steps.pagesurls.outputs.media_base_url }}
+          NOTEPUB_CONFIG: ${{ steps.buildcfg.outputs.path }}
+          NOTEPUB_BASE_URL: ${{ vars.NOTEPUB_BASE_URL }}
+          NOTEPUB_MEDIA_BASE_URL: ${{ vars.NOTEPUB_MEDIA_BASE_URL }}
         run: ./.np/scripts/build.sh
 
       - name: Configure Pages

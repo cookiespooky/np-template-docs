@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-04-24
+
+### Changed
+
+- GitHub Pages base URL is now inferred during CI builds, so template users do not need to edit `.np/config.yaml` after creating a repository.
+- Added responsive video styling so embedded videos fill the content width.
+
 ## 2026-04-23
 
 ### Changed

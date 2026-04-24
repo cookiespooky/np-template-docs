@@ -726,6 +726,14 @@ strong {
   border: 1px solid var(--border);
 }
 
+.content video {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #000;
+}
+
 .content pre {
   background: var(--content-block-bg);
   border: var(--content-block-border);

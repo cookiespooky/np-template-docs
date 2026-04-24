@@ -12,6 +12,36 @@ OUT="./.np/dist"
 CONTENT_DIR="./content"
 MEDIA_DIR="./media"
 
+infer_github_pages_base_url() {
+  local repo="${GITHUB_REPOSITORY:-}"
+  local owner="${GITHUB_REPOSITORY_OWNER:-}"
+
+  if [[ -z "$repo" ]]; then
+    return 1
+  fi
+  if [[ -z "$owner" ]]; then
+    owner="${repo%%/*}"
+  fi
+
+  local name="${repo#*/}"
+  if [[ "$name" == "${owner}.github.io" ]]; then
+    printf 'https://%s.github.io/' "$owner"
+  else
+    printf 'https://%s.github.io/%s/' "$owner" "$name"
+  fi
+}
+
+if [[ -z "${NOTEPUB_BASE_URL:-}" && "${GITHUB_ACTIONS:-}" == "true" ]]; then
+  if BASE_URL="$(infer_github_pages_base_url)"; then
+    export NOTEPUB_BASE_URL="$BASE_URL"
+    echo "Using inferred GitHub Pages URL: $NOTEPUB_BASE_URL"
+  fi
+fi
+
+if [[ -n "${NOTEPUB_BASE_URL:-}" && -z "${NOTEPUB_MEDIA_BASE_URL:-}" ]]; then
+  export NOTEPUB_MEDIA_BASE_URL="${NOTEPUB_BASE_URL%/}/media/"
+fi
+
 if [[ -z "${NOTEPUB_BIN:-}" && -x "./.np/bin/notepub" ]]; then
   BIN="./.np/bin/notepub"
 fi

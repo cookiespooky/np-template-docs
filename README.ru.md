@@ -18,7 +18,7 @@
 - из пайплайна убрана перезапись markdown-файлов
 - Obsidian-синтаксис обрабатывается в движке напрямую (`[[...]]`, `![[...]]`, callouts, footnotes, math)
 - markdown-диагностика встроена в локальную сборку и CI (`validate --markdown`)
-- URL-режим переведен на `runtime.mode: dev|prod` вместо патчинга `site.base_url`
+- URL-режим переведен на `runtime.mode: auto|dev|prod`, production URL вычисляется в CI
 
 ## Локальная сборка
 
@@ -35,9 +35,9 @@ NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
 Скрипт сборки выполняет:
 
 1. генерацию runtime-конфига (опционально, для аналитики)
-2. `notepub validate --links`
-3. `notepub validate --markdown`
-4. `notepub index`
+2. `notepub index`
+3. `notepub validate --links`
+4. `notepub validate --markdown`
 5. `notepub build`
 
 Результат:
@@ -48,22 +48,27 @@ NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
 ## Локальный предпросмотр
 
 ```bash
-./.np/scripts/preview.sh
+NOTEPUB_BIN=/path/to/notepub /path/to/notepub serve --config ./.np/config.yaml --rules ./.np/rules.yaml
 ```
 
-Свой порт:
-
-```bash
-./.np/scripts/preview.sh 8080
-```
-
-`preview.sh` генерирует временный конфиг с `runtime.mode=dev` и локальным `runtime.dev.base_url`.
+С `runtime.mode: auto` локальный запуск автоматически использует dev URL.
 
 ## Деплой
 
 Workflow `.github/workflows/deploy.yml` собирает и деплоит сайт автоматически.
 
-URL для GitHub Pages вычисляется в workflow и подставляется в временный publish-конфиг через `runtime.prod.*`.
+После создания репозитория из шаблона `.np/config.yaml` править не нужно.
+Во время GitHub Actions сборки `.np/scripts/build.sh` вычисляет GitHub Pages URL из `GITHUB_REPOSITORY`:
+
+- `owner.github.io` -> `https://owner.github.io/`
+- любой другой репозиторий -> `https://owner.github.io/repository/`
+
+URL передается в Notepub через environment override:
+
+- `NOTEPUB_BASE_URL`
+- `NOTEPUB_MEDIA_BASE_URL`
+
+Для кастомного домена задайте repository variables с теми же именами.
 
 ## Где настраивать
 
