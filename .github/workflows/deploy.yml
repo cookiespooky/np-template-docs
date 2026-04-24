@@ -142,15 +142,17 @@ jobs:
           curl -L -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
           chmod +x ./.np/bin/notepub
 
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
       - name: Build site
         env:
           NOTEPUB_CONFIG: ${{ steps.buildcfg.outputs.path }}
           NOTEPUB_BASE_URL: ${{ vars.NOTEPUB_BASE_URL }}
           NOTEPUB_MEDIA_BASE_URL: ${{ vars.NOTEPUB_MEDIA_BASE_URL }}
+          GITHUB_PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
         run: ./.np/scripts/build.sh
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -62,7 +62,9 @@ You do not need to edit `.np/config.yaml` after creating a repository from this 
 During GitHub Actions builds, `.np/scripts/build.sh` first checks for a root `CNAME` file.
 If `CNAME` exists, that custom domain becomes the production base URL and is copied into the Pages artifact.
 
-Without `CNAME`, the script infers the GitHub Pages URL from `GITHUB_REPOSITORY`:
+The workflow also passes the official `actions/configure-pages` `base_url` output into the build. This is the preferred source for GitHub Pages project sites and custom domains.
+
+Without a Pages-provided URL or `CNAME`, the script infers the GitHub Pages URL from `GITHUB_REPOSITORY`:
 
 - `owner.github.io` -> `https://owner.github.io/`
 - any other repository -> `https://owner.github.io/repository/`

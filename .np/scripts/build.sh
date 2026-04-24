@@ -65,7 +65,10 @@ infer_github_pages_base_url() {
 }
 
 if [[ -z "${NOTEPUB_BASE_URL:-}" && "${GITHUB_ACTIONS:-}" == "true" ]]; then
-  if BASE_URL="$(infer_custom_domain_base_url)"; then
+  if [[ -n "${GITHUB_PAGES_BASE_URL:-}" ]]; then
+    export NOTEPUB_BASE_URL="${GITHUB_PAGES_BASE_URL%/}/"
+    echo "Using GitHub Pages URL from configure-pages: $NOTEPUB_BASE_URL"
+  elif BASE_URL="$(infer_custom_domain_base_url)"; then
     export NOTEPUB_BASE_URL="$BASE_URL"
     echo "Using custom domain URL from CNAME: $NOTEPUB_BASE_URL"
   elif BASE_URL="$(infer_github_pages_base_url)"; then
