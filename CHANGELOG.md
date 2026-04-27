@@ -29,6 +29,9 @@
 - Fixed CI/template engine mismatch for GitHub Pages build:
   - workflows now install `notepub` from `main` (`go install ...@main`) instead of pinning `v0.1.4`,
   - this restores compatibility with template views that use `.Settings` and other post-`v0.1.4` fields.
+- Fixed release pinning after engine publish:
+  - workflows are now pinned to released `notepub v0.1.5` binaries,
+  - removed temporary `@main` install path used during pre-release sync.
 
 ### Changed
 
