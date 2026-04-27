@@ -23,6 +23,9 @@
 - Improved technical SEO meta generation in theme layout:
   - `twitter:image` now mirrors resolved OpenGraph image.
   - `og:image` now consistently uses engine-resolved `og:image` when present (not only for `article` pages).
+- Fixed CI notepub binary pinning:
+  - switched GitHub Actions workflows from non-existent `v0.1.5` to existing `v0.1.4`,
+  - hardened binary download with `curl -fL` so invalid release URLs fail fast.
 
 ### Changed
 

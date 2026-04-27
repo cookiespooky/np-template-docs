@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NOTEPUB_VERSION: v0.1.5
+      NOTEPUB_VERSION: v0.1.4
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
@@ -164,7 +164,7 @@ jobs:
       - name: Download notepub binary
         run: |
           mkdir -p ./.np/bin
-          curl -L -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
+          curl -fL -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
           chmod +x ./.np/bin/notepub
 
       - name: Configure Pages
