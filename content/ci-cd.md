@@ -2,7 +2,7 @@
 type: hub
 slug: ci-cd
 title: CI/CD
-description: Deployment automation, workflow patterns, and pipeline checks.
+description: Автоматизация деплоя, структура пайплайна и проверки сборки.
 hub:
   - "operations"
 order: 30
@@ -10,10 +10,10 @@ order: 30
 
 # CI/CD
 
-This is a nested hub under **Operations**.
+Это вложенный хаб внутри **Операций**.
 
-Use it to group automation-related pages:
+Используйте его для материалов про автоматизацию:
 
-- workflow structure
-- release checks
-- deployment rollback notes
+- структура пайплайна
+- релизные проверки
+- откат деплоя

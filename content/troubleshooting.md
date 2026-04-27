@@ -1,8 +1,8 @@
 ---
 type: article
 slug: troubleshooting
-title: Troubleshooting
-description: Common issues and practical fixes.
+title: Устранение проблем
+description: Частые проблемы и практические решения.
 hub:
   - "operations"
 order: 20
@@ -10,21 +10,21 @@ related:
   - "build-and-deploy"
 ---
 
-# Troubleshooting
+# Устранение проблем
 
-If styles are missing on GitHub Pages:
+Если стили не загружаются в GitHub Pages:
 
-- verify workflow generated publish config with `runtime.mode: prod`
-- verify computed `runtime.prod.base_url` matches your Pages URL
-- ensure templates use `.AssetsBase` for static assets
+- проверьте, что workflow сформировал publish-конфиг с `runtime.mode: prod`
+- проверьте, что вычисленный `runtime.prod.base_url` совпадает с вашим Pages URL
+- убедитесь, что шаблоны используют `.AssetsBase` для статических ассетов
 
-If links break under project pages:
+Если ссылки ломаются в project pages:
 
-- avoid hardcoded root paths
-- verify canonical/OG URLs use the same resolved runtime base URL
+- избегайте жёстко заданных root-путей
+- проверьте, что canonical/OG URL используют одинаковый runtime base URL
 
-If build fails on markdown validation:
+Если сборка падает на markdown-валидации:
 
-- run `./.np/scripts/build.sh` locally
-- inspect diagnostics output from `validate --markdown`
-- fix unresolved wikilinks/embeds or unsupported syntax
+- запустите `./.np/scripts/build.sh` локально
+- посмотрите diagnostics от `validate --markdown`
+- исправьте нерезолвленные wikilinks/embeds или неподдерживаемый синтаксис

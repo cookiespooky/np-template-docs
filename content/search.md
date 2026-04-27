@@ -1,8 +1,8 @@
 ---
 type: search
 slug: search
-title: Search
-description: Search across documentation pages.
+title: Поиск
+description: Поиск по страницам документации.
 ---
-# Search
-Use the search input above to find pages by title and content.
+# Поиск
+Используйте поле поиска выше, чтобы находить страницы по заголовку и содержимому.

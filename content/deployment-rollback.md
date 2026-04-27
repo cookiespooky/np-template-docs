@@ -1,8 +1,8 @@
 ---
 type: article
 slug: deployment-rollback
-title: Deployment Rollback
-description: How to rollback quickly when a deployment introduces regressions.
+title: Откат деплоя
+description: Как быстро откатиться, если релиз привёл к регрессии.
 hub:
   - "ci-cd"
 order: 30
@@ -11,13 +11,13 @@ related:
   - "troubleshooting"
 ---
 
-# Deployment Rollback
+# Откат деплоя
 
-Rollback strategy should be documented before incidents happen.
+Стратегия отката должна быть описана заранее, до инцидента.
 
-Basic rollback flow:
+Базовый сценарий отката:
 
-1. identify the last known good commit
-2. redeploy that commit
-3. verify critical routes and assets
-4. create a follow-up fix for the failed change
+1. определить последний стабильный коммит
+2. перевыпустить его
+3. проверить критичные маршруты и ассеты
+4. подготовить фикс для неудачного изменения

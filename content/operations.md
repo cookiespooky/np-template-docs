@@ -1,13 +1,13 @@
 ---
 type: hub
 slug: operations
-title: Operations
-description: Build, deploy, and troubleshooting workflow.
+title: Операции
+description: Сборка, деплой и устранение проблем.
 order: 40
 ---
 
-# Operations
+# Операции
 
-This hub covers operational tasks for CI/CD and maintenance.
+Этот хаб покрывает операционные задачи CI/CD и сопровождения.
 
-Start with [[Build and Deploy|Build and Deploy]] and [[Troubleshooting|Troubleshooting]].
+Начните с [[build-and-deploy|Сборка и деплой]] и [[troubleshooting|Устранение проблем]].

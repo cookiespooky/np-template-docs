@@ -1,8 +1,8 @@
 ---
 type: article
 slug: build-and-deploy
-title: Build and Deploy
-description: How the template builds and deploys with GitHub Actions.
+title: Сборка и деплой
+description: Как шаблон собирается и деплоится через GitHub Actions.
 hub:
   - "operations"
 order: 10
@@ -11,20 +11,20 @@ related:
   - "configuration"
 ---
 
-# Build and Deploy
+# Сборка и деплой
 
-Default workflow:
+Базовый workflow:
 
-1. Downloads a pinned Notepub binary release.
-2. Resolves content source (`local`, `content_repo`, or `s3`).
-3. Runs local template build pipeline (`validate -> index -> build`).
-4. Uploads `.np/dist` to GitHub Pages.
+1. Скачивает зафиксированный релиз бинарника Notepub.
+2. Определяет источник контента (`local`, `content_repo`, или `s3`).
+3. Запускает локальный конвейер шаблона (`validate -> index -> build`).
+4. Публикует `.np/dist` в GitHub Pages.
 
-URL handling:
+Как обрабатываются URL:
 
-- CI computes the final GitHub Pages URL.
-- Workflow creates temporary publish config with `runtime.mode: prod`.
-- `runtime.prod.base_url` and `runtime.prod.media_base_url` are injected into that temporary config.
+- CI вычисляет итоговый URL GitHub Pages.
+- Пайплайн формирует временный publish-конфиг с `runtime.mode: prod`.
+- `runtime.prod.base_url` и `runtime.prod.media_base_url` подставляются в этот временный конфиг.
 
-The content markdown is not rewritten in CI.
-Obsidian syntax is processed by the engine at render/index time.
+Markdown-контент в CI не переписывается.
+Синтаксис Obsidian обрабатывается самим движком на этапе индексации и рендера.

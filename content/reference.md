@@ -1,13 +1,13 @@
 ---
 type: hub
 slug: reference
-title: Reference
-description: Detailed configuration and rules reference.
+title: Справочник
+description: Подробный справочник по конфигурации и правилам.
 order: 50
 ---
 
-# Reference
+# Справочник
 
-Reference hub for file-level configuration.
+Хаб со справочными материалами по файлам конфигурации.
 
-Start with [[Configuration|Configuration]].
+Начните с [[configuration|Конфигурация]].

@@ -1,10 +1,10 @@
 ---
 type: footer
 slug: footer
-title: Footer
-description: Footer content rendered across the documentation site.
+title: Футер
+description: Контент футера, который отображается на всех страницах документации.
 ---
-Use this page to manage shared footer content.
+Используйте эту страницу для управления общим содержимым футера.
 
-- Replace this text with your own links.
-- External links automatically open in a new tab.
+- Замените этот текст своими ссылками.
+- Внешние ссылки автоматически открываются в новой вкладке.

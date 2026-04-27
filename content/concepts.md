@@ -1,13 +1,13 @@
 ---
 type: hub
 slug: concepts
-title: Concepts
-description: Mental model for content types, routes, and links.
+title: Концепции
+description: Модель типов контента, маршрутов и связей.
 order: 20
 ---
 
-# Concepts
+# Концепции
 
-This hub explains how Notepub maps markdown notes to website pages.
+Этот хаб объясняет, как Notepub преобразует markdown-заметки в веб-страницы.
 
-Start with [[content-model|Content Model]].
+Начните с [[content-model|Модель контента и frontmatter]].

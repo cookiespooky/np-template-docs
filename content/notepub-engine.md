@@ -26,7 +26,7 @@ Notepub отвечает за:
 Официальные ссылки:
 
 - сайт движка: [Notepub](https://cookiespooky.github.io/np/ru)
-- раздел быстрого старта в документации движка: [Getting Started](https://cookiespooky.github.io/np/ru/docs/getting-started/)
+- раздел быстрого старта в документации движка: [Быстрый старт](https://cookiespooky.github.io/np/ru/docs/getting-started/)
 
 ## Что важно для пользователя шаблона
 

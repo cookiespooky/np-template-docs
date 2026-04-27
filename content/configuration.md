@@ -1,8 +1,8 @@
 ---
 type: article
 slug: configuration
-title: Configuration
-description: Key settings in config.yaml and rules.yaml.
+title: Конфигурация
+description: Ключевые настройки в config.yaml и rules.yaml.
 hub:
   - "reference"
 order: 10
@@ -11,20 +11,20 @@ related:
   - "content-model"
 ---
 
-# Configuration
+# Конфигурация
 
-`config.yaml` controls:
+`config.yaml` управляет:
 
-- site metadata
-- runtime URL mode (`runtime.mode`, `runtime.dev`, `runtime.prod`)
-- content source and paths
-- theme and server settings
-- markdown policy and cache behavior
+- метаданными сайта
+- URL-режимом runtime (`runtime.mode`, `runtime.dev`, `runtime.prod`)
+- источником контента и путями
+- темой и серверными настройками
+- markdown-политикой и кешированием
 
-`rules.yaml` controls:
+`rules.yaml` управляет:
 
-- content types
-- routes
-- links extraction and resolution
-- collections
-- search and sitemap behavior
+- типами контента
+- маршрутами
+- извлечением и резолвом ссылок
+- коллекциями
+- поведением поиска и sitemap

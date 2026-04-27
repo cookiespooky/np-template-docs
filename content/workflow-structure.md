@@ -1,8 +1,8 @@
 ---
 type: article
 slug: workflow-structure
-title: Workflow Structure
-description: How to structure CI/CD pipelines for predictable builds.
+title: Структура пайплайна
+description: Как строить CI/CD-пайплайны с предсказуемой сборкой.
 hub:
   - "ci-cd"
 order: 10
@@ -10,16 +10,16 @@ related:
   - "build-and-deploy"
 ---
 
-# Workflow Structure
+# Структура пайплайна
 
-A maintainable CI/CD workflow should be easy to read and easy to debug.
+Поддерживаемый CI/CD-пайплайн должен быть простым для чтения и отладки.
 
-Suggested structure:
+Рекомендуемая структура:
 
-1. setup
-2. validation
-3. build
-4. deploy
-5. post-deploy checks
+1. подготовка
+2. валидация
+3. сборка
+4. деплой
+5. постдеплой-проверки
 
-Keep each stage isolated and with clear logs.
+Держите каждый этап изолированным и с понятными логами.

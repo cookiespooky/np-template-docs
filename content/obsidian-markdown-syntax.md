@@ -1,8 +1,8 @@
 ---
 type: article
 slug: obsidian-markdown-syntax
-title: Obsidian Markdown Syntax Reference
-description: Syntax test page with explicit support status for this Notepub template.
+title: Справочник синтаксиса Obsidian Markdown
+description: Тестовая страница синтаксиса с явным статусом поддержки в этом шаблоне Notepub.
 hub:
   - "authoring"
 order: 99
@@ -11,167 +11,143 @@ related:
   - "content-model"
 image: /media/notepub_cover.png
 ---
-# Obsidian Markdown Syntax Reference
+# Справочник синтаксиса Obsidian Markdown
 
-This page is a practical test for markdown generation in this template.
+Эта страница — практический тест рендера markdown в шаблоне.
 
-## Support status in this template
+## Статус поддержки в шаблоне
 
-- `Rendered correctly`: CommonMark + GFM + Obsidian wikilinks/embeds + callouts + footnotes + math wrappers.
-- `Partially supported`: some Obsidian-specific extensions (see section below).
+- `Поддерживается корректно`: CommonMark + GFM + Obsidian wikilinks/embeds + callouts + footnotes + math wrappers.
+- `Поддерживается частично`: часть специфичных расширений Obsidian (см. раздел ниже).
 
-## Rendered correctly
+## Поддерживается корректно
 
-### Headings
+### Заголовки
 
-# H1 Heading
-## H2 Heading
-### H3 Heading
-#### H4 Heading
-##### H5 Heading
-###### H6 Heading
+# Заголовок H1
+## Заголовок H2
+### Заголовок H3
+#### Заголовок H4
+##### Заголовок H5
+###### Заголовок H6
 
-### Paragraphs and line breaks
+### Параграфы и переносы строк
 
-This is a paragraph with standard spacing.
-This line stays in the same paragraph.
+Это абзац со стандартными отступами.
+Эта строка остаётся в том же абзаце.
 
-This is a new paragraph.  
-Hard break line.
+Это новый абзац.  
+Строка с принудительным переносом.
 
-### Emphasis and inline styles
+### Выделения и встроенные стили
 
-**Bold**, *italic*, and ***bold italic***.
+**Жирный**, *курсив*, и ***жирный курсив***.
 
-~~Strikethrough~~ and `inline code`.
+~~Зачёркнутый~~ и `встроенный код`.
 
-Escaped characters: \*not italic\*, \[not a link\], \#not-a-tag.
+Экранированные символы: \*не курсив\*, \[не ссылка\], \#не-тег.
 
 ---
 
-### Links
+### Ссылки
 
-External link: [Notepub](https://cookiespooky.github.io/np/ru)
+Внешняя ссылка: [Notepub](https://cookiespooky.github.io/np/ru)
 
-Auto-link: https://example.com/docs
+Автоссылка: https://example.com/docs
 
-Relative markdown link: [Getting Started](/getting-started)
+Относительная Markdown-ссылка: [Быстрый старт](/getting-started)
 
-Wikilink: [[getting-started|Getting Started]]
+Викиссылка: [[getting-started|Быстрый старт]]
 
-Wikilink with alias: [[Build and Deploy|Build & Deploy Guide]]
+Викиссылка с алиасом: [[build-and-deploy|Гайд по сборке и деплою]]
 
-Heading link: [[getting-started#Что дальше|Jump to Next steps section]]
+Ссылка на заголовок: [[getting-started#Что дальше|Перейти к разделу Что дальше]]
 
-### Images and embeds
+### Изображения и встраивания
 
-Markdown image:
+Markdown-изображение:
 
-![Template cover](/media/notepub_cover.png)
+![Обложка шаблона](/media/notepub_cover.png)
 
-Image embed result:
+Результат встраивания изображения:
 
 ![](/media/notepub_cover.png)
 
-Obsidian non-image embed (rendered as linked embed block):
+Obsidian-встраивание не-изображения (рендерится как embed-блок со ссылкой):
 
-![[getting-started|Embedded Getting Started]]
+![[getting-started|Встроенный блок Быстрого старта]]
 
-### Lists
+### Списки
 
-- Unordered list item
-- Another item
-  - Nested item
-  - Nested item 2
-    - Third level
+- Элемент маркированного списка
+- Ещё один элемент
+  - Вложенный элемент
+  - Вложенный элемент 2
+    - Третий уровень
 
-1. Ordered item
-2. Ordered item
-   1. Nested ordered
-   2. Nested ordered
+1. Элемент нумерованного списка
+2. Элемент нумерованного списка
+   1. Вложенный нумерованный
+   2. Вложенный нумерованный
 
-- [ ] Open task
-- [x] Done task
-- [ ] Another open task
+- [ ] Открытая задача
+- [x] Завершённая задача
+- [ ] Ещё одна открытая задача
 
-### Blockquotes and callouts
+### Цитаты и callout-блоки
 
-> Basic blockquote
+> Базовая цитата
 >
-> Multi-line quote.
+> Цитата в несколько строк.
 
-> [!note] Callout title
-> Callout content
+> [!note] Заголовок callout-блока
+> Содержимое callout-блока.
 
-> [!tip]+ Foldable callout (open)
-> This block should be rendered as an expandable callout.
+> [!tip]+ Сворачиваемый callout-блок (открыт)
+> Этот блок должен рендериться как раскрываемый callout-блок.
 
-### Code blocks
+### Блоки кода
 
 ```bash
-./.np/scripts/preview.sh 9000
+./.np/scripts/build.sh
 ```
 
 ```js
 function greet(name) {
-  return `Hello, ${name}`;
+  return `Привет, ${name}`;
 }
 ```
 
-```json
-{
-  "site": "np-template-docs",
-  "mode": "test"
-}
-```
+### Таблицы
 
-```yaml
-runtime:
-  mode: dev
-```
+| Синтаксис | Пример | Поддержка |
+|:--|:--|:--|
+| Markdown-ссылка | `[Быстрый старт](/getting-started)` | Да |
+| Викиссылка | `[[getting-started\|Быстрый старт]]` | Да |
+| Список задач | `- [x]` | Да |
 
-### Footnotes and math wrappers
-
-Footnote reference[^1]
-
-[^1]: Footnote text
-
-Inline math wrapper: $E = mc^2$
-
-$$
-\int_a^b f(x)\,dx = F(b) - F(a)
-$$
-
-### Tables
-
-| Syntax | Example | Rendered |
-|---|---|---|
-| Bold | `**text**` | Yes |
-| Wikilink | `[[getting-started\|Getting Started]]` | Yes |
-| Task list | `- [x]` | Yes |
-
-| Left | Center | Right |
+| Лево | Центр | Право |
 |:--|:--:|--:|
 | a | b | c |
 | 1 | 2 | 3 |
 
-### Tags
+### Теги
 
-Inline tags: #docs #obsidian #markdown #docs/markdown
+Теги в строке: #документация #obsidian #markdown #документация/markdown
 
-## Partially supported / unsupported
+## Поддерживается частично / не поддерживается
 
-The following syntax is Obsidian-specific and not fully supported:
+Следующий синтаксис специфичен для Obsidian и поддерживается не полностью:
 
 ```markdown
-%% Obsidian comment %%
+%% Комментарий Obsidian %%
 
 [[getting-started#^block-id]]
 ![[getting-started#^block-id]]
 ```
 
-Block references (`#^...`) are detected by markdown diagnostics as unsupported.
+Ссылки на блоки (`#^...`) фиксируются markdown-диагностикой как неподдерживаемые.
 
-## Mixed formatting paragraph
+## Смешанное форматирование в одном абзаце
 
-You can combine **bold**, *italic*, `code`, [links](https://example.com), and [[getting-started|Wikilinks]] in one sentence.
+Можно комбинировать **жирный**, *курсив*, `код`, [ссылки](https://example.com) и [[getting-started|викиссылки]] в одной строке.

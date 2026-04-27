@@ -23,8 +23,8 @@ image: /media/notepub_cover.png
 
 1. [[getting-started|Быстрый старт]]
 2. [[content-model|Модель контента и frontmatter]]
-3. [[Obsidian Markdown Syntax Reference|Markdown и синтаксис Obsidian]]
+3. [[obsidian-markdown-syntax|Markdown и синтаксис Obsidian]]
 4. [[notepub-engine|Движок Notepub]]
-5. [[Build and Deploy|Сборка и деплой]]
+5. [[build-and-deploy|Сборка и деплой]]
 
 Левая навигация построена через хабы и масштабируется от небольшой документации до крупной базы знаний.

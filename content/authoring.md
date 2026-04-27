@@ -1,13 +1,13 @@
 ---
 type: hub
 slug: authoring
-title: Authoring
-description: Writing patterns, links, and structure.
+title: Авторинг
+description: Правила написания, ссылки и структура материалов.
 order: 30
 ---
 
-# Authoring
+# Авторинг
 
-This hub focuses on authoring conventions for maintainable documentation.
+Этот хаб описывает практики авторинга для поддерживаемой документации.
 
-Start with [[Links and Wikilinks|Links and Wikilinks]].
+Начните с [[links-and-wikilinks|Ссылки и викиссылки]].

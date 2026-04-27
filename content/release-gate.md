@@ -1,8 +1,8 @@
 ---
 type: article
 slug: release-gate
-title: Release Gate
-description: CI matrix and smoke checks required before documentation releases.
+title: Релизный гейт
+description: CI-матрица и smoke-проверки, обязательные перед релизом документации.
 hub:
   - "ci-cd"
 order: 15
@@ -12,46 +12,46 @@ related:
   - "workflow-structure"
 ---
 
-# Release Gate
+# Релизный гейт
 
-Use this page as the single release-readiness contract for this template.
+Используйте эту страницу как единый контракт релизной готовности шаблона.
 
-## Required CI gate
+## Обязательный CI-гейт
 
-Workflow: `.github/workflows/quality-gate.yml`
+Файл workflow: `.github/workflows/quality-gate.yml`
 
-Matrix dimensions:
+Измерения матрицы:
 
 - `compat_mode`: `auto`, `modern`, `legacy`
-- notes mode: `present`, `absent`
-- source mode: `local`, `s3`
+- режим заметок: `present`, `absent`
+- режим источника: `local`, `s3`
 
-What each axis verifies:
+Что проверяет каждая ось:
 
-- `compat_mode` validates compatibility behavior between modern and legacy contracts.
-- notes mode validates fallback behavior when `Site.md` and `Interface.md` are missing.
-- source mode validates both local build flow and S3 effective-config compatibility.
+- `compat_mode` проверяет совместимость между modern и legacy-контрактами.
+- режим заметок проверяет fallback-поведение при отсутствии `Site.md` и `Interface.md`.
+- режим источника проверяет локальную сборку и совместимость S3 effective-config.
 
-## Required merge conditions
+## Обязательные условия слияния
 
-A release candidate is considered ready only when all are true:
+Релизный кандидат считается готовым только если выполнено всё:
 
-- all matrix jobs in `quality-gate.yml` are green
-- deploy workflow can build from current `main`
-- no blocking markdown diagnostics for release content
-- no unresolved manual release blockers in PR discussion
+- все задания матрицы в `quality-gate.yml` зелёные
+- deploy-workflow умеет собрать текущий `main`
+- нет блокирующих markdown-диагностик релизного контента
+- в обсуждении PR нет нерешённых ручных релиз-блокеров
 
-## Recommended smoke checks
+## Рекомендуемые smoke-проверки
 
-After CI is green and before tagging/release announcement:
+После зелёного CI и до тега/анонса релиза:
 
-- open home page and at least one page per main hub
-- verify search results for 2-3 representative queries
-- verify sitemap/robots availability
-- verify one image and one video embed rendering
-- verify canonical URLs on a couple of pages
+- открыть главную и минимум по одной странице на каждый основной хаб
+- проверить выдачу поиска для 2-3 типовых запросов
+- проверить доступность sitemap/robots
+- проверить рендер минимум одного изображения и одного видео-встраивания
+- проверить canonical URL на нескольких страницах
 
-## Commands for local dry run
+## Команды для локального прогона
 
 ```bash
 ./.np/scripts/build.sh
@@ -61,8 +61,8 @@ After CI is green and before tagging/release announcement:
 NOTEPUB_BIN=/path/to/notepub /path/to/notepub validate --config ./.np/config.yaml --rules ./.np/rules.yaml --markdown --markdown-format text
 ```
 
-## Related docs
+## Связанные документы
 
-- [[Release Checklist|Release Checklist]]
-- [[Build and Deploy|Build and Deploy]]
-- [[Deployment Rollback|Deployment Rollback]]
+- [[release-checklist|Чеклист релиза]]
+- [[build-and-deploy|Сборка и деплой]]
+- [[deployment-rollback|Откат деплоя]]

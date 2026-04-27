@@ -1,7 +1,7 @@
 ---
-site_title: Notepub Docs Template
-site_description: Template repository for documentation websites powered by Notepub.
-site_language: en
+site_title: Шаблон документации Notepub
+site_description: Шаблон репозитория для документации на движке Notepub.
+site_language: ru
 site_default_og_image: /media/notepub.jpg
 site_icon: /media/notepub.png
 brand_name: Notepub
@@ -16,6 +16,6 @@ theme_font_url: "https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200
 theme_radius: 14
 ---
 
-# Site
+# Сайт
 
-Edit these properties in Obsidian to customize the site without changing `.np/config.yaml`.
+Изменяйте эти свойства в Obsidian, чтобы настраивать сайт без правок `.np/config.yaml`.

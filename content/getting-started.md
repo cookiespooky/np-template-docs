@@ -33,6 +33,6 @@ related:
 ## Что дальше
 
 - [[content-model|Модель контента и frontmatter]]
-- [[Obsidian Markdown Syntax Reference|Поддержка markdown и синтаксис Obsidian]]
-- [[Build and Deploy|Сборка и деплой]]
+- [[obsidian-markdown-syntax|Поддержка markdown и синтаксис Obsidian]]
+- [[build-and-deploy|Сборка и деплой]]
 - [[notepub-engine|Движок Notepub]]

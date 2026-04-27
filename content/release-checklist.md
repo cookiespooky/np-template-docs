@@ -1,8 +1,8 @@
 ---
 type: article
 slug: release-checklist
-title: Release Checklist
-description: Pre-release checks before deploying documentation updates.
+title: Чеклист релиза
+description: Предрелизные проверки перед публикацией обновлений документации.
 hub:
   - "ci-cd"
 order: 20
@@ -12,20 +12,20 @@ related:
   - "release-gate"
 ---
 
-# Release Checklist
+# Чеклист релиза
 
-Use a release checklist to avoid avoidable production issues.
+Используйте чеклист релиза, чтобы избежать типовых проблем в продакшене.
 
-Minimum checks:
+Минимальные проверки:
 
-- build passes without warnings
-- search index is generated
-- sitemap/robots are valid
-- key pages render correctly
-- external links are not broken
-- quality gate matrix is green:
+- сборка проходит без предупреждений
+- поисковый индекс сгенерирован
+- sitemap/robots валидны
+- ключевые страницы рендерятся корректно
+- внешние ссылки не битые
+- матрица quality gate зелёная:
   - `compat_mode`: `auto`, `modern`, `legacy`
-  - notes mode: `present`, `absent`
-  - source mode: `local`, `s3` (config compatibility)
+  - режим заметок: `present`, `absent`
+  - режим источника: `local`, `s3` (совместимость конфига)
 
-Use [[release-gate|Release Gate]] as the source of truth for required merge and smoke conditions.
+Используйте [[release-gate|Релизный гейт]] как источник истины по обязательным условиям слияния и smoke-проверкам.

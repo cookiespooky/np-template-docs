@@ -1,8 +1,8 @@
 ---
 type: article
 slug: links-and-wikilinks
-title: Links and Wikilinks
-description: Internal linking patterns and wiki-style references.
+title: Ссылки и викиссылки
+description: Паттерны внутренней перелинковки и wiki-ссылки.
 hub:
   - "authoring"
 order: 10
@@ -10,13 +10,13 @@ related:
   - "content-model"
 ---
 
-# Links and Wikilinks
+# Ссылки и викиссылки
 
-Use regular markdown links or wikilinks for cross-page navigation.
+Используйте обычные markdown-ссылки или викиссылки для навигации между страницами.
 
-Examples:
+Примеры:
 
-- `[Configuration](/configuration/)`
-- `[[Configuration|Configuration]]`
+- `[Конфигурация](/configuration/)`
+- `[[configuration|Конфигурация]]`
 
-Keep slugs stable to avoid broken links.
+Старайтесь не менять `slug`, чтобы не получать битые ссылки.
