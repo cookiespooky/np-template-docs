@@ -44,6 +44,12 @@
   - source mode: `local|s3` (S3 config compatibility gate)
 - Updated release checklist and deploy docs with the new matrix gate requirement.
 - Added `content/release-gate.md` as a single source of truth for release readiness criteria.
+- Expanded Russian self-documentation in template content:
+  - translated and expanded `content/getting-started.md` with full flow from `Use this template` to deploy via Git plugin,
+  - expanded `content/content-model.md` with required frontmatter, optional fields, and page type reference,
+  - translated `content/home.md` and updated starter navigation to key docs,
+  - added `content/notepub-engine.md` with links to Notepub site and engine Getting Started docs,
+  - added a summary section in `README.ru.md` linking frontmatter/types/syntax/start/engine docs.
 
 ## 2026-04-24
 

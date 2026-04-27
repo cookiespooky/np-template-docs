@@ -15,6 +15,19 @@
 
 Формат удобен для Obsidian: основная работа идет в `content/`, `media/`, `Site.md` и `Interface.md`.
 
+## Что должен знать пользователь шаблона
+
+- обязательный frontmatter для контентной страницы: `type`, `slug`, `title`
+- основные типы страниц: `home`, `hub`, `article`, `page`, `search`, `footer`
+- референс по синтаксису markdown/Obsidian: `content/obsidian-markdown-syntax.md`
+- пошаговый сценарий от **Use this template** до деплоя через Obsidian Git plugin: `content/getting-started.md`
+- страница про движок и ссылки на официальную документацию: `content/notepub-engine.md`
+
+Официальные ссылки на движок:
+
+- сайт Notepub: <https://cookiespooky.github.io/np/ru>
+- Getting Started в документации движка: <https://cookiespooky.github.io/np/ru/docs/getting-started/>
+
 ## Быстрый пользовательский путь (Obsidian-first)
 
 1. Нажмите **Use this template** на GitHub и создайте репозиторий.

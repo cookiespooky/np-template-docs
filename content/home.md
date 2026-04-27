@@ -1,28 +1,30 @@
 ---
 type: home
 slug: home
-title: Documentation Template
-description: Start here to learn how this template is organized and how to publish your docs.
+title: Шаблон документации
+description: "Русскоязычный старт по шаблону: структура, frontmatter, синтаксис и деплой."
 image: /media/notepub_cover.png
 ---
 
-# Documentation Template
+# Шаблон документации
 
 ![](/media/notepub_cover.png)
 
-Welcome to the **Notepub documentation template**.
+Добро пожаловать в шаблон документации на Notepub.
 
-This repository is designed to work out of the box with GitHub Pages and GitHub Actions.
+Репозиторий готов к работе из коробки с GitHub Pages и GitHub Actions.
 
-Template branding defaults:
+Базовые правила шаблона:
 
-- Header brand name comes from this page frontmatter `title`.
-- Header brand logo comes from `site.default_og_image` in `config.yaml`.
+- название в шапке берётся из frontmatter этой страницы (`title`)
+- логотип в шапке задаётся через `Site.md` (`brand_logo`)
  
-Use this path to get started quickly:
+Рекомендуемый путь для старта:
 
-1. [[Getting Started|Getting Started]]
-2. [[Configuration|Configuration]]
-3. [[Build and Deploy|Build and Deploy]]
+1. [[getting-started|Быстрый старт]]
+2. [[content-model|Модель контента и frontmatter]]
+3. [[Obsidian Markdown Syntax Reference|Markdown и синтаксис Obsidian]]
+4. [[notepub-engine|Движок Notepub]]
+5. [[Build and Deploy|Сборка и деплой]]
 
-The sidebar structure demonstrates hub-based navigation that scales from small docs to larger knowledge bases.
+Левая навигация построена через хабы и масштабируется от небольшой документации до крупной базы знаний.

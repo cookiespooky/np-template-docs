@@ -10,4 +10,4 @@ order: 20
 
 This hub explains how Notepub maps markdown notes to website pages.
 
-Start with [[Content Model|Content Model]].
+Start with [[content-model|Content Model]].

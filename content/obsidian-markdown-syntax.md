@@ -51,17 +51,17 @@ Escaped characters: \*not italic\*, \[not a link\], \#not-a-tag.
 
 ### Links
 
-External link: [Notepub](https://cookiespooky.github.io/np/)
+External link: [Notepub](https://cookiespooky.github.io/np/ru)
 
 Auto-link: https://example.com/docs
 
 Relative markdown link: [Getting Started](/getting-started)
 
-Wikilink: [[Getting Started|Getting Started]]
+Wikilink: [[getting-started|Getting Started]]
 
 Wikilink with alias: [[Build and Deploy|Build & Deploy Guide]]
 
-Heading link: [[Getting Started#Next steps|Jump to Next steps section]]
+Heading link: [[getting-started#Что дальше|Jump to Next steps section]]
 
 ### Images and embeds
 
@@ -75,7 +75,7 @@ Image embed result:
 
 Obsidian non-image embed (rendered as linked embed block):
 
-![[Getting Started|Embedded Getting Started]]
+![[getting-started|Embedded Getting Started]]
 
 ### Lists
 
@@ -147,7 +147,7 @@ $$
 | Syntax | Example | Rendered |
 |---|---|---|
 | Bold | `**text**` | Yes |
-| Wikilink | `[[Getting Started\|Getting Started]]` | Yes |
+| Wikilink | `[[getting-started\|Getting Started]]` | Yes |
 | Task list | `- [x]` | Yes |
 
 | Left | Center | Right |
@@ -166,12 +166,12 @@ The following syntax is Obsidian-specific and not fully supported:
 ```markdown
 %% Obsidian comment %%
 
-[[Getting Started#^block-id]]
-![[Getting Started#^block-id]]
+[[getting-started#^block-id]]
+![[getting-started#^block-id]]
 ```
 
 Block references (`#^...`) are detected by markdown diagnostics as unsupported.
 
 ## Mixed formatting paragraph
 
-You can combine **bold**, *italic*, `code`, [links](https://example.com), and [[Getting Started|Wikilinks]] in one sentence.
+You can combine **bold**, *italic*, `code`, [links](https://example.com), and [[getting-started|Wikilinks]] in one sentence.

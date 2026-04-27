@@ -1,34 +1,38 @@
 ---
 type: page
 slug: getting-started
-title: Getting Started
-description: Quick setup from template to first deploy.
+title: Быстрый старт
+description: Путь от Use this template до деплоя в GitHub Pages.
 order: 10
 related:
   - "configuration"
   - "build-and-deploy"
+  - "content-model"
+  - "notepub-engine"
 ---
 
-# Getting Started
+# Быстрый старт
 
-Create your own docs site in minutes:
+Ниже минимальный путь запуска шаблона с нуля:
 
-1. Click **Use this template** on GitHub.
-2. Create a new repository from this template.
-3. Clone it locally.
-4. Open the repository as an Obsidian vault.
-5. In Obsidian settings, disable hidden files to keep `.np/` and `.notepub/` out of your writing workflow.
-6. Edit `content/`, `media/`, `Site.md`, and `Interface.md`.
-7. Commit and push to `main` (CLI, desktop Git client, or Obsidian Git plugin).
-8. GitHub Actions builds and deploys your site automatically.
+1. Нажмите **Use this template** на GitHub.
+2. Создайте новый репозиторий из шаблона.
+3. Клонируйте репозиторий на компьютер.
+4. Откройте папку репозитория как vault в Obsidian.
+5. В Obsidian отключите показ скрытых файлов, чтобы `.np/` и `.notepub/` не мешали авторингу.
+6. Редактируйте контент в `content/`, `media/`, `Site.md`, `Interface.md`.
+7. Делайте commit/push в `main` через любой Git-клиент, в том числе через Obsidian Git plugin.
+8. GitHub Actions автоматически соберёт и опубликует сайт в GitHub Pages.
 
-Use technical paths only when needed:
+Технические файлы трогаются только при необходимости:
 
-- `.np/config.yaml` for advanced developer/runtime settings
-- `.np/rules.yaml` for routing/model rules
-- `.np/theme/` for template customization
+- `.np/config.yaml` для расширенных настроек
+- `.np/rules.yaml` для правил модели и роутинга
+- `.np/theme/` для кастомизации шаблона
 
-Next steps:
+## Что дальше
 
-- [[Configuration|Configuration]]
-- [[Build and Deploy|Build and Deploy]]
+- [[content-model|Модель контента и frontmatter]]
+- [[Obsidian Markdown Syntax Reference|Поддержка markdown и синтаксис Obsidian]]
+- [[Build and Deploy|Сборка и деплой]]
+- [[notepub-engine|Движок Notepub]]
