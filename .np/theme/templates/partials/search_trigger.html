@@ -1,12 +1,12 @@
 {{ define "search_trigger.html" }}
-<dialog id="np-search-dialog" class="np-search-dialog" aria-label="Search" role="dialog">
+<dialog id="np-search-dialog" class="np-search-dialog" aria-label="{{ index .Settings "ui_search" }}" role="dialog">
   <form class="np-search-form" method="get" action="{{ .BaseURL }}/search">
-    <input type="search" name="q" placeholder="Search" autocomplete="off" />
-    <button type="button" class="np-search-close" data-action="close" aria-label="Close">×</button>
+    <input type="search" name="q" placeholder="{{ index .Settings "ui_search_placeholder" }}" autocomplete="off" />
+    <button type="button" class="np-search-close" data-action="close" aria-label="{{ index .Settings "ui_close" }}">×</button>
   </form>
   <div class="np-search-status" aria-live="polite"></div>
   <div class="np-search-results" role="listbox"></div>
-  <a class="np-search-all" href="{{ .BaseURL }}/search">All results</a>
+  <a class="np-search-all" href="{{ .BaseURL }}/search">{{ index .Settings "ui_all_results" }}</a>
 </dialog>
 <div class="np-search-backdrop" data-action="close" hidden></div>
 <script>

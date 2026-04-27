@@ -7,6 +7,11 @@
   var body = document.body;
   var lockedScrollY = 0;
 
+  function label(key, fallback) {
+    var labels = window.__notepubLabels || {};
+    return labels[key] || fallback;
+  }
+
   function lockBodyScroll() {
     if (!body || body.classList.contains('nav-locked')) return;
     lockedScrollY = window.scrollY || window.pageYOffset || 0;
@@ -38,7 +43,7 @@
     lockBodyScroll();
     if (navOpen) {
       navOpen.classList.add('is-open');
-      navOpen.setAttribute('aria-label', 'Close navigation');
+      navOpen.setAttribute('aria-label', label('closeNavigation', navOpen.getAttribute('data-close-label') || ''));
     }
   }
 
@@ -49,7 +54,7 @@
     unlockBodyScroll();
     if (navOpen) {
       navOpen.classList.remove('is-open');
-      navOpen.setAttribute('aria-label', 'Open navigation');
+      navOpen.setAttribute('aria-label', label('openNavigation', navOpen.getAttribute('data-open-label') || ''));
     }
   }
 

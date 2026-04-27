@@ -1,17 +1,17 @@
 {{- $isHome := eq .Page.Type "home" -}}
 {{- $homePath := printf "%s/" .BaseURL -}}
-{{- $docsTitle := "Documentation" -}}
+{{- $siteTitle := index .Settings "site_title" -}}
+{{- $siteLanguage := index .Settings "site_language" -}}
+{{- $homeLabel := index .Settings "ui_home" -}}
+{{- $docsTitle := index .Settings "brand_name" -}}
 {{- $metaOGImage := "" -}}
 {{- $metaOGImageAlt := "" -}}
-{{- $defaultOGImage := printf "%s/notepub.jpg" .AssetsBase -}}
-{{- $fmOverridesOGImage := false -}}
+{{- $defaultOGImage := index .Settings "site_default_og_image" -}}
+{{- if eq $defaultOGImage "" }}{{- $defaultOGImage = printf "%s/notepub.jpg" .AssetsBase -}}{{- end -}}
 
 {{- range .Meta.OpenGraph -}}
   {{- if eq .Key "og:image" -}}{{- $metaOGImage = .Value -}}{{- end -}}
   {{- if eq .Key "og:image:alt" -}}{{- $metaOGImageAlt = .Value -}}{{- end -}}
-{{- end -}}
-{{- with (index .FM "og_image") -}}
-  {{- if ne (printf "%v" .) "" -}}{{- $fmOverridesOGImage = true -}}{{- end -}}
 {{- end -}}
 
 {{- $hubs := .Collections.nav_hubs.Items -}}
@@ -91,7 +91,7 @@
 {{- end -}}
 
 <!doctype html>
-<html lang="en">
+<html lang="{{ $siteLanguage }}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -101,9 +101,19 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ .AssetsBase }}/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="{{ .AssetsBase }}/favicon-16x16.png" />
   <link rel="icon" href="{{ .AssetsBase }}/favicon.ico" />
-  <link rel="mask-icon" href="{{ .AssetsBase }}/notepub.svg" color="#0a0a0a" />
+  <link rel="mask-icon" href="{{ .AssetsBase }}/notepub.svg" color="{{ index .Settings "theme_accent" }}" />
   <link rel="manifest" href="{{ .AssetsBase }}/site.webmanifest" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
+  {{- with (index .Settings "theme_font_url") }}<link rel="stylesheet" href="{{ . }}" />{{- end }}
+  <style>
+    :root {
+      --accent: {{ index .Settings "theme_accent" }};
+      --link: {{ index .Settings "theme_link" }};
+      --radius: {{ index .Settings "theme_radius" }}px;
+      --font-sans: {{ index .Settings "theme_font_stack" }};
+      --font-heading: {{ index .Settings "theme_heading_font_stack" }};
+    }
+  </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -119,13 +129,11 @@
     {{- end -}}
   {{- end }}
   {{- $resolvedOGImage := $defaultOGImage -}}
-  {{- if and (eq .Page.Type "article") (ne $metaOGImage "") -}}
-    {{- $resolvedOGImage = $metaOGImage -}}
-  {{- end -}}
-  {{- if and (ne .Page.Type "article") $fmOverridesOGImage (ne $metaOGImage "") -}}
+  {{- if ne $metaOGImage "" -}}
     {{- $resolvedOGImage = $metaOGImage -}}
   {{- end -}}
   <meta property="og:image" content="{{ $resolvedOGImage }}" />
+  <meta name="twitter:image" content="{{ $resolvedOGImage }}" />
   {{- if and (eq $resolvedOGImage $metaOGImage) (ne $metaOGImageAlt "") }}<meta property="og:image:alt" content="{{ $metaOGImageAlt }}" />{{- end }}
 
   {{- if .Meta.JSONLD }}
@@ -142,8 +150,8 @@
         "@type": "WebSite",
         "@id": "{{ .BaseURL }}/#website",
         "url": "{{ .BaseURL }}/",
-        "name": "Notepub Docs Template",
-        "inLanguage": "en"
+        "name": "{{ $siteTitle }}",
+        "inLanguage": "{{ $siteLanguage }}"
       },
       {
         "@type": "WebPage",
@@ -152,7 +160,7 @@
         "name": "{{ .Title }}",
         "description": "{{ .Page.Description }}",
         "isPartOf": { "@id": "{{ .BaseURL }}/#website" },
-        "inLanguage": "en"
+        "inLanguage": "{{ $siteLanguage }}"
       }
       {{- if $isArticle -}},
       {
@@ -160,7 +168,7 @@
         "headline": "{{ .Title }}",
         "description": "{{ .Page.Description }}",
         "mainEntityOfPage": { "@id": "{{ $pageURL }}#webpage" },
-        "inLanguage": "en"
+        "inLanguage": "{{ $siteLanguage }}"
       }
       {{- end -}}
     ]
@@ -179,7 +187,7 @@
       {
         "@type": "ListItem",
         "position": 1,
-        "name": "Home",
+        "name": "{{ $homeLabel }}",
         "item": "{{ $homePath }}"
       }
       {{- if ne $crumbHub3Slug "" -}},
@@ -205,6 +213,14 @@
   <script>
     window.__notepubSearchMode = "{{ .SearchMode }}";
     window.__notepubBaseURL = "{{ .BaseURL }}";
+    window.__notepubLabels = {
+      loading: {{ index .Settings "ui_search_loading" }},
+      noResults: {{ index .Settings "ui_search_no_results" }},
+      searchError: {{ index .Settings "ui_search_error" }},
+      searchQuery: {{ index .Settings "ui_search_query" }},
+      openNavigation: {{ index .Settings "ui_open_navigation" }},
+      closeNavigation: {{ index .Settings "ui_close_navigation" }}
+    };
   </script>
   <title>{{ .Title }}</title>
 </head>
@@ -217,7 +233,7 @@
 
   <aside class="mobile-nav" data-nav-panel aria-hidden="true">
     <div class="mobile-nav-inner">
-      <nav class="mobile-nav-links mobile-docs-nav" aria-label="Documentation navigation">
+      <nav class="mobile-nav-links mobile-docs-nav" aria-label="{{ index .Settings "ui_documentation_navigation" }}">
         <ul class="sidebar-list">
           <li class="sidebar-group"><a class="{{ if eq $.Page.Type "home" }}is-active{{ end }}" href="{{ $homePath }}">{{ $docsTitle }}</a></li>
           {{- if $pages }}
@@ -257,7 +273,7 @@
 
   <main class="wrap">
     <div class="layout">
-      <aside class="sidebar" aria-label="Documentation navigation">
+      <aside class="sidebar" aria-label="{{ index .Settings "ui_documentation_navigation" }}">
         <ul class="sidebar-list">
           <li class="sidebar-group"><a class="{{ if eq $.Page.Type "home" }}is-active{{ end }}" href="{{ $homePath }}">{{ $docsTitle }}</a></li>
           {{- if $pages }}
@@ -294,8 +310,8 @@
 
       <div class="content-area">
         {{- if not $isHome }}
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="{{ $homePath }}">Home</a>
+        <nav class="breadcrumb" aria-label="{{ index .Settings "ui_breadcrumb" }}">
+          <a href="{{ $homePath }}">{{ $homeLabel }}</a>
           {{- if ne $crumbHub3Slug "" }}
           <span>/</span><a href="{{ printf "%s%s" .BaseURL $crumbHub3Path }}">{{ $crumbHub3Title }}</a>
           <span>/</span><a href="{{ printf "%s%s" .BaseURL $crumbHub2Path }}">{{ $crumbHub2Title }}</a>

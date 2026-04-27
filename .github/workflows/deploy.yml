@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NOTEPUB_VERSION: v0.1.4
+      NOTEPUB_VERSION: v0.1.5
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
@@ -108,23 +108,48 @@ jobs:
               -v key="$S3_ACCESS_KEY" \
               -v secret="$S3_SECRET_KEY" \
               -v use_path_style="$USE_PATH_STYLE" '
-            BEGIN { skip=0 }
-            /^content:/ {
-              print "content:"
-              print "  source: \"s3\""
-              print "  s3:"
-              print "    endpoint: \"" endpoint "\""
-              print "    region: \"" region "\""
-              print "    bucket: \"" bucket "\""
-              print "    prefix: \"" prefix "\""
-              print "    access_key: \"" key "\""
-              print "    secret_key: \"" secret "\""
-              print "    use_path_style: " use_path_style
-              skip=1
+            BEGIN { in_content=0; in_s3=0; saw_content=0 }
+            /^content:[[:space:]]*$/ {
+              saw_content=1
+              in_content=1
+              print
               next
             }
-            skip && /^[A-Za-z_][A-Za-z0-9_]*:/ { skip=0 }
-            !skip { print }
+            /^s3:[[:space:]]*$/ {
+              in_s3=1
+              next
+            }
+            in_content {
+              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
+                in_content=0
+              } else if (/^[[:space:]]*source:[[:space:]]*/) {
+                print "  source: \"s3\""
+                next
+              }
+            }
+            in_s3 {
+              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
+                in_s3=0
+              } else {
+                next
+              }
+            }
+            print
+            END {
+              if (!saw_content) {
+                print "content:"
+                print "  source: \"s3\""
+              }
+              print ""
+              print "s3:"
+              print "  endpoint: \"" endpoint "\""
+              print "  region: \"" region "\""
+              print "  force_path_style: " use_path_style
+              print "  bucket: \"" bucket "\""
+              print "  prefix: \"" prefix "\""
+              print "  access_key: \"" key "\""
+              print "  secret_key: \"" secret "\""
+            }
           ' ./.np/config.yaml > ./.np/config.effective.yaml
 
       - name: Set effective build config

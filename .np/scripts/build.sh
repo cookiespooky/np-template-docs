@@ -81,6 +81,14 @@ if [[ -n "${NOTEPUB_BASE_URL:-}" && -z "${NOTEPUB_MEDIA_BASE_URL:-}" ]]; then
   export NOTEPUB_MEDIA_BASE_URL="${NOTEPUB_BASE_URL%/}/media/"
 fi
 
+echo "[0/9] prepare settings"
+if command -v python3 >/dev/null 2>&1; then
+  CFG="$(python3 ./.np/scripts/prepare-settings.py notes "$CFG")"
+else
+  echo "python3 is required to prepare Notepub template settings"
+  exit 1
+fi
+
 if [[ -n "${NOTEPUB_BASE_URL:-}" ]]; then
   RESOLVED_CFG="./.np/config.resolved.yaml"
   mkdir -p "$(dirname "$RESOLVED_CFG")"
@@ -154,30 +162,31 @@ if ! command -v "$BIN" >/dev/null 2>&1; then
 fi
 
 if [[ -f "./.np/scripts/generate-runtime-config.sh" ]]; then
-  echo "[0/8] generate runtime config"
+  echo "[1/9] generate runtime config"
   ./.np/scripts/generate-runtime-config.sh "$CFG"
 fi
 
-echo "[1/8] index"
+echo "[2/9] index"
 "$BIN" index --config "$CFG" --rules "$RULES"
 
-echo "[2/8] validate links + markdown"
-if "$BIN" validate --help 2>&1 | grep -q -- " -links"; then
+echo "[3/9] validate links + markdown"
+VALIDATE_HELP="$("$BIN" validate --help 2>&1 || true)"
+if printf '%s\n' "$VALIDATE_HELP" | grep -q -- "-links"; then
   "$BIN" validate --config "$CFG" --rules "$RULES" --links
 else
   echo "validate --links is not supported by this notepub binary; skipping"
 fi
 
-if "$BIN" validate --help 2>&1 | grep -q -- " -markdown"; then
+if printf '%s\n' "$VALIDATE_HELP" | grep -q -- "-markdown"; then
   "$BIN" validate --config "$CFG" --rules "$RULES" --markdown --markdown-format text
 else
   echo "validate --markdown is not supported by this notepub binary; skipping"
 fi
 
-echo "[3/8] build"
+echo "[4/9] build"
 "$BIN" build --config "$CFG" --rules "$RULES" --artifacts "$ART" --dist "$OUT"
 
-echo "[4/8] export content media"
+echo "[5/9] export content media"
 rm -rf "$OUT/media"
 mkdir -p "$OUT/media"
 
@@ -219,24 +228,19 @@ if [[ -f "./CNAME" ]]; then
   cp ./CNAME "$OUT/CNAME"
 fi
 
-echo "[5/8] copy llms files"
-if [[ -f "$OUT/assets/llms.txt" ]]; then
-  cp "$OUT/assets/llms.txt" "$OUT/llms.txt"
-fi
-if [[ -f "$OUT/assets/llms-full.txt" ]]; then
-  cp "$OUT/assets/llms-full.txt" "$OUT/llms-full.txt"
-fi
+echo "[6/9] prepare icons manifest llms"
+python3 ./.np/scripts/prepare-settings.py assets "$CFG" "$OUT"
 
-echo "[6/8] normalize robots"
+echo "[7/9] normalize robots"
 if [[ -f "$OUT/robots.txt" ]]; then
   awk '!/^LLM: /' "$OUT/robots.txt" > "$OUT/robots.txt.tmp"
   cat "$OUT/robots.txt.tmp" > "$OUT/robots.txt"
   rm -f "$OUT/robots.txt.tmp"
 fi
 
-echo "[7/8] mirror dist to ./dist (compat)"
+echo "[8/9] mirror dist to ./dist (compat)"
 rm -rf ./dist
 mkdir -p ./dist
 cp -R "$OUT"/. ./dist/
 
-echo "[8/8] done -> $OUT"
+echo "[9/9] done -> $OUT"

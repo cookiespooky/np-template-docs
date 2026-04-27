@@ -38,6 +38,11 @@
     return basePath + path;
   }
 
+  function label(key, fallback) {
+    var labels = window.__notepubLabels || {};
+    return labels[key] || fallback;
+  }
+
   function init() {
     state.form = document.querySelector('.np-search-page-form');
     state.input = document.querySelector('.np-search-page-form input[name="q"]');
@@ -48,6 +53,12 @@
     state.empty = document.querySelector('.np-search-empty');
     state.more = document.querySelector('.np-search-more');
     if (!state.form || !state.input || !state.autoResults) return;
+
+    if (state.pageList) {
+      state.autoResults.innerHTML = '';
+      state.autoResults.classList.remove('has-items');
+      state.autoResults.style.display = 'none';
+    }
 
     state.input.addEventListener('input', onInput);
     state.input.addEventListener('keydown', onKeyDown);
@@ -64,7 +75,7 @@
     if (initial && state.input.value.trim() !== initial) {
       state.input.value = initial;
     }
-    if (initial.length >= 2) {
+    if (initial.length >= 2 && !state.pageList) {
       search(initial);
     }
   }
@@ -149,7 +160,7 @@
   function searchServer(q) {
     if (state.abort) state.abort.abort();
     state.abort = new AbortController();
-    setStatus('Loading...');
+    setStatus(label('loading', ''));
     fetch(withBasePath('/v1/search') + '?q=' + encodeURIComponent(q) + '&limit=10', {
       signal: state.abort.signal,
       headers: { 'Accept': 'application/json' }
@@ -162,16 +173,16 @@
         renderAutocomplete(items);
         renderPageResults(items);
         updateSummary(q, items.length);
-        setStatus(items.length ? '' : 'No results');
+        setStatus(items.length ? '' : label('noResults', ''));
       })
       .catch(function(err) {
         if (err && err.name === 'AbortError') return;
-        setStatus('Error loading results');
+        setStatus(label('searchError', ''));
       });
   }
 
   function searchStatic(q) {
-    setStatus('Loading...');
+    setStatus(label('loading', ''));
     var items = Array.isArray(state.staticItems) ? state.staticItems : [];
     var query = q.toLowerCase();
     var matches = [];
@@ -191,10 +202,15 @@
     renderAutocomplete(top);
     renderPageResults(top);
     updateSummary(q, matches.length);
-    setStatus(top.length ? '' : 'No results');
+    setStatus(top.length ? '' : label('noResults', ''));
   }
 
   function renderAutocomplete(items) {
+    if (state.pageList) {
+      state.autoResults.innerHTML = '';
+      state.autoResults.classList.remove('has-items');
+      return;
+    }
     state.autoResults.innerHTML = '';
     if (!items.length) {
       state.autoResults.classList.remove('has-items');
@@ -293,7 +309,8 @@
       state.summary.textContent = '';
       return;
     }
-    state.summary.textContent = 'Query: ' + q + ' (' + count + ')';
+    var queryLabel = label('searchQuery', '');
+    state.summary.textContent = (queryLabel ? queryLabel + ': ' : '') + q + ' (' + count + ')';
   }
 
   function setStatus(text) {

@@ -1,0 +1,133 @@
+name: Quality Gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  matrix-gate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        compat_mode: [auto, modern, legacy]
+        notes_mode: [present, absent]
+        source_mode: [local, s3]
+    env:
+      NOTEPUB_VERSION: v0.1.5
+      NOTEPUB_BIN: ./.np/bin/notepub
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download notepub binary
+        run: |
+          mkdir -p ./.np/bin
+          curl -L -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
+          chmod +x ./.np/bin/notepub
+
+      - name: Apply compat mode
+        env:
+          COMPAT_MODE: ${{ matrix.compat_mode }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          path = Path(".np/config.yaml")
+          text = path.read_text(encoding="utf-8")
+          mode = os.environ["COMPAT_MODE"]
+          line = f'compat_mode: "{mode}"'
+          if re.search(r'(?m)^compat_mode:\s*.*$', text):
+              text = re.sub(r'(?m)^compat_mode:\s*.*$', line, text)
+          else:
+              text = line + "\n\n" + text
+          path.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Apply notes mode
+        if: matrix.notes_mode == 'absent'
+        run: |
+          rm -f ./Site.md ./Interface.md
+
+      - name: Run local source gate
+        if: matrix.source_mode == 'local'
+        run: |
+          ./.np/scripts/build.sh
+
+      - name: Build S3 effective config
+        if: matrix.source_mode == 's3'
+        env:
+          S3_ENDPOINT: http://127.0.0.1:9000
+          S3_REGION: us-east-1
+          S3_BUCKET: ci-bucket
+          S3_PREFIX: content
+          S3_USE_PATH_STYLE: true
+          S3_ACCESS_KEY: ci-access
+          S3_SECRET_KEY: ci-secret
+        run: |
+          PREFIX="${S3_PREFIX:-content}"
+          USE_PATH_STYLE="${S3_USE_PATH_STYLE:-true}"
+
+          awk -v endpoint="$S3_ENDPOINT" \
+              -v region="$S3_REGION" \
+              -v bucket="$S3_BUCKET" \
+              -v prefix="$PREFIX" \
+              -v key="$S3_ACCESS_KEY" \
+              -v secret="$S3_SECRET_KEY" \
+              -v use_path_style="$USE_PATH_STYLE" '
+            BEGIN { in_content=0; in_s3=0; saw_content=0 }
+            /^content:[[:space:]]*$/ {
+              saw_content=1
+              in_content=1
+              print
+              next
+            }
+            /^s3:[[:space:]]*$/ {
+              in_s3=1
+              next
+            }
+            in_content {
+              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
+                in_content=0
+              } else if (/^[[:space:]]*source:[[:space:]]*/) {
+                print "  source: \"s3\""
+                next
+              }
+            }
+            in_s3 {
+              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
+                in_s3=0
+              } else {
+                next
+              }
+            }
+            print
+            END {
+              if (!saw_content) {
+                print "content:"
+                print "  source: \"s3\""
+              }
+              print ""
+              print "s3:"
+              print "  endpoint: \"" endpoint "\""
+              print "  region: \"" region "\""
+              print "  force_path_style: " use_path_style
+              print "  bucket: \"" bucket "\""
+              print "  prefix: \"" prefix "\""
+              print "  access_key: \"" key "\""
+              print "  secret_key: \"" secret "\""
+            }
+          ' ./.np/config.yaml > ./.np/config.effective.yaml
+
+      - name: Validate S3 effective config
+        if: matrix.source_mode == 's3'
+        run: |
+          "$NOTEPUB_BIN" validate --config ./.np/config.effective.yaml --rules ./.np/rules.yaml
+

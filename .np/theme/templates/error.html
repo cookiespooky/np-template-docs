@@ -1,5 +1,5 @@
 <article class="content">
-  <header class="page-hero"><h1>Error</h1></header>
-  <p class="lead">The template could not render this page. Reason is below.</p>
+  <header class="page-hero"><h1>{{ index .Settings "ui_error_title" }}</h1></header>
+  <p class="lead">{{ index .Settings "ui_error_lead" }}</p>
   <pre><code>{{ .Error }}</code></pre>
 </article>

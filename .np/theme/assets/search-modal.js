@@ -37,6 +37,11 @@
     return basePath + path;
   }
 
+  function label(key, fallback) {
+    var labels = window.__notepubLabels || {};
+    return labels[key] || fallback;
+  }
+
   function init(opts) {
     if (state.inited) return;
     state.inited = true;
@@ -148,7 +153,7 @@
   }
 
   function searchServer(q) {
-    setStatus('Loading...');
+    setStatus(label('loading', ''));
     fetch(state.endpoint + '?q=' + encodeURIComponent(q) + '&limit=8', {
       headers: { 'Accept': 'application/json' }
     })
@@ -157,16 +162,16 @@
         state.items = Array.isArray(data.items) ? data.items : [];
         state.selected = -1;
         renderResults();
-        setStatus(state.items.length ? '' : 'No results');
+        setStatus(state.items.length ? '' : label('noResults', ''));
       })
       .catch(function() {
-        setStatus('Error loading results');
+        setStatus(label('searchError', ''));
         clearResults();
       });
   }
 
   function searchStatic(q) {
-    setStatus('Loading...');
+    setStatus(label('loading', ''));
     var items = Array.isArray(state.staticItems) ? state.staticItems : [];
     var query = q.toLowerCase();
     var matches = [];
@@ -180,7 +185,7 @@
     state.items = matches.slice(0, 8);
     state.selected = -1;
     renderResults();
-    setStatus(state.items.length ? '' : 'No results');
+    setStatus(state.items.length ? '' : label('noResults', ''));
   }
 
   function onKeyDown(e) {

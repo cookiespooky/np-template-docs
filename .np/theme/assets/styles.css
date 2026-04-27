@@ -6,7 +6,10 @@
   --border: #eaeaea;
   --soft: #f5f5f5;
   --soft-2: #fafafa;
+  --accent: #0a0a0a;
   --link: #0a0a0a;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-sans);
   --shadow: 0 1px 2px rgba(0, 0, 0, .04);
   --radius: 14px;
   --content-block-border: 1px solid var(--border);
@@ -28,7 +31,7 @@ body {
 
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-sans);
   background: var(--bg);
   color: var(--fg);
   line-height: 1.6;
@@ -312,6 +315,7 @@ body.is-home .kicker {
 
 h1 {
   margin: 16px 0 10px;
+  font-family: var(--font-heading);
   font-size: clamp(34px, 5vw, 54px);
   line-height: 1.05;
   letter-spacing: -0.04em;
@@ -697,6 +701,7 @@ strong {
 .content h2,
 .content h3,
 .content h4 {
+  font-family: var(--font-heading);
   letter-spacing: -0.02em;
 }
 

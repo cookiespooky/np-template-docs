@@ -1,13 +1,9 @@
 {{ define "header.html" }}
 {{- $homePath := printf "%s/" .BaseURL -}}
-{{- $searchLabel := "Search" -}}
-{{- $brandName := "Notepub" -}}
-{{- $brandLogo := printf "%s/notepub.svg" .AssetsBase -}}
-{{- with .Collections.home_page.Items -}}
-  {{- if gt (len .) 0 -}}
-    {{- $brandName = (index . 0).Title -}}
-  {{- end -}}
-{{- end -}}
+{{- $searchLabel := index .Settings "ui_search" -}}
+{{- $brandName := index .Settings "brand_name" -}}
+{{- $brandLogo := index .Settings "brand_logo" -}}
+{{- if eq $brandLogo "" }}{{- $brandLogo = printf "%s/notepub.svg" .AssetsBase -}}{{- end -}}
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="{{ $homePath }}" aria-label="{{ $brandName }}">
@@ -22,7 +18,7 @@
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
         </svg>
       </a>
-      <button class="icon-button nav-toggle" type="button" data-nav-open aria-label="Open navigation">
+      <button class="icon-button nav-toggle" type="button" data-nav-open data-open-label="{{ index .Settings "ui_open_navigation" }}" data-close-label="{{ index .Settings "ui_close_navigation" }}" aria-label="{{ index .Settings "ui_open_navigation" }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon icon-open" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
           <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>

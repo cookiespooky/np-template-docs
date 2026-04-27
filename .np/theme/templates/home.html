@@ -5,7 +5,7 @@
 {{- $hubs := .Collections.nav_hubs.Items -}}
 {{- if $hubs }}
 <section class="section">
-  <h2 class="section-title">Documentation Hubs</h2>
+  <h2 class="section-title">{{ index .Settings "ui_home_hubs_title" }}</h2>
   <div class="grid grid-3">
     {{- range $hubs }}
     <a class="card card-link" href="{{ printf "%s%s" $.BaseURL .Path }}">

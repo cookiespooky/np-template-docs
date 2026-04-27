@@ -9,6 +9,7 @@ order: 20
 related:
   - "workflow-structure"
   - "troubleshooting"
+  - "release-gate"
 ---
 
 # Release Checklist
@@ -22,3 +23,9 @@ Minimum checks:
 - sitemap/robots are valid
 - key pages render correctly
 - external links are not broken
+- quality gate matrix is green:
+  - `compat_mode`: `auto`, `modern`, `legacy`
+  - notes mode: `present`, `absent`
+  - source mode: `local`, `s3` (config compatibility)
+
+Use [[release-gate|Release Gate]] as the source of truth for required merge and smoke conditions.

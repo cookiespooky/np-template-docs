@@ -1,9 +1,39 @@
 {{ define "footer.html" }}
 <footer class="site-footer">
   <div class="container footer-inner">
-    <div class="footer-built muted" data-site-footer-content>
-      Built with <a class="is-external" href="https://cookiespooky.github.io/np/">Notepub</a>
-    </div>
+    <div class="footer-built content footer-content muted" data-site-footer-content data-footer-src="{{ .BaseURL }}/footer/"></div>
   </div>
 </footer>
+<script>
+(function() {
+  var mount = document.querySelector('[data-site-footer-content]');
+  if (!mount || mount.dataset.footerLoaded === '1') return;
+  mount.dataset.footerLoaded = '1';
+  var src = mount.getAttribute('data-footer-src');
+  if (!src) return;
+  fetch(src, { credentials: 'same-origin' })
+    .then(function(res) {
+      if (!res.ok) throw new Error('footer fetch failed');
+      return res.text();
+    })
+    .then(function(html) {
+      var doc = new DOMParser().parseFromString(html, 'text/html');
+      var content = doc.querySelector('.content-area .content') || doc.querySelector('.content');
+      if (!content || !content.innerHTML.trim()) return;
+      mount.innerHTML = content.innerHTML;
+      mount.querySelectorAll('a[href]').forEach(function(link) {
+        var href = link.getAttribute('href') || '';
+        if (!href || href.indexOf('#') === 0 || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
+        try {
+          var url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) {
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+          }
+        } catch (_err) {}
+      });
+    })
+    .catch(function() {});
+})();
+</script>
 {{ end }}

@@ -4,33 +4,34 @@
 
 <section class="section search-page">
   <form class="np-search-page-form" method="get" action="{{ .BaseURL }}/search">
-    <input type="search" name="q" value="{{ .SearchQuery }}" placeholder="Search documentation" autocomplete="off" />
+    <input type="search" name="q" value="{{ .SearchQuery }}" placeholder="{{ index .Settings "ui_search_placeholder" }}" autocomplete="off" />
   </form>
 
   <div class="np-search-status" aria-live="polite"></div>
   <div class="np-search-results" role="listbox"></div>
 
-  {{- if .SearchQuery }}
-  <p class="np-search-summary">Query: {{ .SearchQuery }}</p>
-  {{- end }}
-
   {{- if .SearchItems }}
   <ul class="np-search-page-results">
     {{- range .SearchItems }}
     <li>
-      <a href="{{ printf "%s%s" $.BaseURL .Path }}">{{ .Title }}</a>
-      {{- if .Snippet }}
-      <p>{{ .Snippet }}</p>
-      {{- end }}
+      <a href="{{ printf "%s%s" $.BaseURL .Path }}" class="np-search-item-card">
+        <img class="np-search-item-thumb" src="{{ $.AssetsBase }}/notepub.jpg" alt="" loading="lazy" decoding="async" />
+        <span class="np-search-item-body">
+          <span class="np-search-item-title">{{ .Title }}</span>
+          {{- if .Snippet }}
+          <span class="np-search-item-snippet">{{ .Snippet }}</span>
+          {{- end }}
+        </span>
+      </a>
     </li>
     {{- end }}
   </ul>
   {{- else if .SearchQuery }}
-  <p class="np-search-empty">No results found.</p>
+  <p class="np-search-empty">{{ index .Settings "ui_search_no_results_found" }}</p>
   {{- end }}
 
   {{- if .SearchNextCursor }}
-  <a class="np-search-more" href="{{ .BaseURL }}/search?q={{ .SearchQuery }}&cursor={{ .SearchNextCursor }}">Next page</a>
+  <a class="np-search-more" href="{{ .BaseURL }}/search?q={{ .SearchQuery }}&cursor={{ .SearchNextCursor }}">{{ index .Settings "ui_next_page" }}</a>
   {{- end }}
 </section>
 <script>
