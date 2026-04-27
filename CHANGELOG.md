@@ -26,6 +26,9 @@
 - Fixed CI notepub binary pinning:
   - switched GitHub Actions workflows from non-existent `v0.1.5` to existing `v0.1.4`,
   - hardened binary download with `curl -fL` so invalid release URLs fail fast.
+- Fixed CI/template engine mismatch for GitHub Pages build:
+  - workflows now install `notepub` from `main` (`go install ...@main`) instead of pinning `v0.1.4`,
+  - this restores compatibility with template views that use `.Settings` and other post-`v0.1.4` fields.
 
 ### Changed
 

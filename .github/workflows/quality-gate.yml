@@ -19,17 +19,17 @@ jobs:
         notes_mode: [present, absent]
         source_mode: [local, s3]
     env:
-      NOTEPUB_VERSION: v0.1.4
+      NOTEPUB_REF: main
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download notepub binary
+      - name: Install notepub
         run: |
           mkdir -p ./.np/bin
-          curl -fL -o ./.np/bin/notepub "https://github.com/cookiespooky/notepub/releases/download/${NOTEPUB_VERSION}/notepub_linux_amd64"
-          chmod +x ./.np/bin/notepub
+          GOBIN="$PWD/.np/bin" go install github.com/cookiespooky/notepub/cmd/notepub@${NOTEPUB_REF}
+          ./.np/bin/notepub version
 
       - name: Apply compat mode
         env:
@@ -72,59 +72,67 @@ jobs:
           S3_ACCESS_KEY: ci-access
           S3_SECRET_KEY: ci-secret
         run: |
-          PREFIX="${S3_PREFIX:-content}"
-          USE_PATH_STYLE="${S3_USE_PATH_STYLE:-true}"
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
 
-          awk -v endpoint="$S3_ENDPOINT" \
-              -v region="$S3_REGION" \
-              -v bucket="$S3_BUCKET" \
-              -v prefix="$PREFIX" \
-              -v key="$S3_ACCESS_KEY" \
-              -v secret="$S3_SECRET_KEY" \
-              -v use_path_style="$USE_PATH_STYLE" '
-            BEGIN { in_content=0; in_s3=0; saw_content=0 }
-            /^content:[[:space:]]*$/ {
-              saw_content=1
-              in_content=1
-              print
-              next
-            }
-            /^s3:[[:space:]]*$/ {
-              in_s3=1
-              next
-            }
-            in_content {
-              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
-                in_content=0
-              } else if (/^[[:space:]]*source:[[:space:]]*/) {
-                print "  source: \"s3\""
-                next
-              }
-            }
-            in_s3 {
-              if (/^[A-Za-z_][A-Za-z0-9_]*:[[:space:]]*$/) {
-                in_s3=0
-              } else {
-                next
-              }
-            }
-            print
-            END {
-              if (!saw_content) {
-                print "content:"
-                print "  source: \"s3\""
-              }
-              print ""
-              print "s3:"
-              print "  endpoint: \"" endpoint "\""
-              print "  region: \"" region "\""
-              print "  force_path_style: " use_path_style
-              print "  bucket: \"" bucket "\""
-              print "  prefix: \"" prefix "\""
-              print "  access_key: \"" key "\""
-              print "  secret_key: \"" secret "\""
-            }
-          ' ./.np/config.yaml > ./.np/config.effective.yaml
+          src = Path("./.np/config.yaml")
+          dst = Path("./.np/config.effective.yaml")
+          lines = src.read_text(encoding="utf-8").splitlines()
+
+          out = []
+          i = 0
+          saw_content = False
+          while i < len(lines):
+              line = lines[i]
+              if re.match(r"^s3:\s*$", line):
+                  i += 1
+                  while i < len(lines) and (lines[i].startswith(" ") or lines[i].strip() == ""):
+                      i += 1
+                  continue
+
+              if re.match(r"^content:\s*$", line):
+                  saw_content = True
+                  out.append(line)
+                  i += 1
+                  saw_source = False
+                  while i < len(lines):
+                      nested = lines[i]
+                      if re.match(r"^[A-Za-z_][A-Za-z0-9_]*:\s*$", nested):
+                          break
+                      if re.match(r"^\s{2}source:\s*", nested):
+                          out.append('  source: "s3"')
+                          saw_source = True
+                      else:
+                          out.append(nested)
+                      i += 1
+                  if not saw_source:
+                      out.append('  source: "s3"')
+                  continue
+
+              out.append(line)
+              i += 1
+
+          if not saw_content:
+              out.extend(["content:", '  source: "s3"'])
+
+          out.extend(
+              [
+                  "",
+                  "s3:",
+                  f'  endpoint: "{os.environ["S3_ENDPOINT"]}"',
+                  f'  region: "{os.environ["S3_REGION"]}"',
+                  f'  force_path_style: {os.environ.get("S3_USE_PATH_STYLE", "true")}',
+                  f'  bucket: "{os.environ["S3_BUCKET"]}"',
+                  f'  prefix: "{os.environ.get("S3_PREFIX", "content")}"',
+                  f'  access_key: "{os.environ["S3_ACCESS_KEY"]}"',
+                  f'  secret_key: "{os.environ["S3_SECRET_KEY"]}"',
+              ]
+          )
+
+          dst.write_text("\n".join(out) + "\n", encoding="utf-8")
+          PY
 
       - name: Validate S3 effective config
         if: matrix.source_mode == 's3'
