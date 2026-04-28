@@ -659,7 +659,6 @@ section,
 
 ul {
   margin: 12px 0 0;
-  padding-left: 18px;
 }
 
 li {
@@ -728,7 +727,6 @@ strong {
 .content img {
   max-width: 100%;
   border-radius: 12px;
-  border: 1px solid var(--border);
 }
 
 .content video {
