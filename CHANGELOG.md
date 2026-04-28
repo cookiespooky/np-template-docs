@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Updated CI workflows to use released `notepub v0.1.7` binaries.
 - Synced template infrastructure with Notepub `v0.1.6`:
   - updated deploy and quality-gate workflows to `NOTEPUB_VERSION: v0.1.6`.
 - Applied latest `template update` for modern layout (`.np/*`):
