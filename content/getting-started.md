@@ -1,8 +1,9 @@
 ---
 type: page
 slug: getting-started
-title: Быстрый старт
+title: Быстрый старт (legacy)
 description: Путь от Use this template до деплоя в GitHub Pages.
+draft: true
 order: 10
 related:
   - "configuration"

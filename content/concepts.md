@@ -3,6 +3,7 @@ type: hub
 slug: concepts
 title: Концепции
 description: Модель типов контента, маршрутов и связей.
+draft: true
 order: 20
 ---
 

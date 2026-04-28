@@ -3,6 +3,7 @@ type: article
 slug: content-model
 title: Модель контента и frontmatter
 description: Какие поля обязательны, какие опциональны и какие типы страниц есть в шаблоне.
+draft: true
 hub:
   - "concepts"
 order: 10
@@ -53,14 +54,10 @@ title: Пример страницы
 description: Короткое описание страницы для превью и SEO.
 draft: false
 noindex: false
-hub:
-  - "concepts"
-related:
-  - "getting-started"
+hub: ["concepts"]
+related: ["getting-started"]
 order: 20
-tags:
-  - docs
-  - template
+tags: ["docs", "template"]
 ---
 ```
 

@@ -3,6 +3,7 @@ type: hub
 slug: authoring
 title: Авторинг
 description: Правила написания, ссылки и структура материалов.
+draft: true
 order: 30
 ---
 

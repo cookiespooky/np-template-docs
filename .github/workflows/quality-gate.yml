@@ -19,7 +19,7 @@ jobs:
         notes_mode: [present, absent]
         source_mode: [local, s3]
     env:
-      NOTEPUB_VERSION: v0.1.5
+      NOTEPUB_VERSION: v0.1.6
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout

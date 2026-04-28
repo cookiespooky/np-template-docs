@@ -3,6 +3,7 @@ type: article
 slug: notepub-engine
 title: Движок Notepub
 description: Что делает движок, где его документация и с чего начать.
+draft: true
 hub:
   - "concepts"
 order: 30

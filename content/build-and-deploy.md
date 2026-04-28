@@ -3,6 +3,7 @@ type: article
 slug: build-and-deploy
 title: Сборка и деплой
 description: Как шаблон собирается и деплоится через GitHub Actions.
+draft: true
 hub:
   - "operations"
 order: 10

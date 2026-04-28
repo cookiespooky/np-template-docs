@@ -20,7 +20,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NOTEPUB_VERSION: v0.1.5
+      NOTEPUB_VERSION: v0.1.6
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
@@ -55,6 +55,41 @@ jobs:
           echo "content_repo=$CONTENT_REPO" >> "$GITHUB_OUTPUT"
           echo "content_ref=$CONTENT_REF" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve local content dir from config
+        id: contentdir
+        run: |
+          CONTENT_DIR="$(python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          cfg = Path("./.np/config.yaml")
+          if not cfg.exists():
+              print("./content")
+              raise SystemExit(0)
+
+          lines = cfg.read_text(encoding="utf-8").splitlines()
+          in_content = False
+          for line in lines:
+              if re.match(r'^content:\s*$', line):
+                  in_content = True
+                  continue
+              if in_content and re.match(r'^[A-Za-z_][A-Za-z0-9_]*:\s*$', line):
+                  in_content = False
+              if in_content:
+                  m = re.match(r'^\s{2}local_dir:\s*(.+?)\s*$', line)
+                  if m:
+                      value = m.group(1).strip().strip('"').strip("'")
+                      print(value or "./content")
+                      raise SystemExit(0)
+
+          print("./content")
+          PY
+          )"
+          if [ -z "$CONTENT_DIR" ]; then
+            CONTENT_DIR="./content"
+          fi
+          echo "path=$CONTENT_DIR" >> "$GITHUB_OUTPUT"
+
       - name: Checkout content repository
         if: steps.source.outputs.content_source == 'content_repo'
         uses: actions/checkout@v4
@@ -63,10 +98,13 @@ jobs:
           ref: ${{ steps.source.outputs.content_ref }}
           path: .external-content
 
-      - name: Sync external content into site content/
+      - name: Sync external content into site content
         if: steps.source.outputs.content_source == 'content_repo'
+        env:
+          CONTENT_DIR: ${{ steps.contentdir.outputs.path }}
         run: |
-          find ./content -type f -name '*.md' ! -path './content/search.md' -delete
+          mkdir -p "$CONTENT_DIR"
+          find "$CONTENT_DIR" -type f -name '*.md' ! -path "$CONTENT_DIR/search.md" -delete
 
           rsync -a \
             --exclude '.git/' \
@@ -76,7 +114,7 @@ jobs:
             --exclude 'LICENSE' \
             --exclude '.gitignore' \
             --exclude '.gitattributes' \
-            ./.external-content/ ./content/
+            ./.external-content/ "$CONTENT_DIR/"
 
       - name: Prepare S3 config override
         if: steps.source.outputs.content_source == 's3'

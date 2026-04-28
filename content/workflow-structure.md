@@ -3,6 +3,7 @@ type: article
 slug: workflow-structure
 title: Структура пайплайна
 description: Как строить CI/CD-пайплайны с предсказуемой сборкой.
+draft: true
 hub:
   - "ci-cd"
 order: 10

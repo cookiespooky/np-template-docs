@@ -3,6 +3,7 @@ type: article
 slug: deployment-rollback
 title: Откат деплоя
 description: Как быстро откатиться, если релиз привёл к регрессии.
+draft: true
 hub:
   - "ci-cd"
 order: 30

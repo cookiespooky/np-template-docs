@@ -3,6 +3,7 @@ type: article
 slug: release-gate
 title: Релизный гейт
 description: CI-матрица и smoke-проверки, обязательные перед релизом документации.
+draft: true
 hub:
   - "ci-cd"
 order: 15

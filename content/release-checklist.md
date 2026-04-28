@@ -3,6 +3,7 @@ type: article
 slug: release-checklist
 title: Чеклист релиза
 description: Предрелизные проверки перед публикацией обновлений документации.
+draft: true
 hub:
   - "ci-cd"
 order: 20

@@ -3,6 +3,7 @@ type: hub
 slug: reference
 title: Справочник
 description: Подробный справочник по конфигурации и правилам.
+draft: true
 order: 50
 ---
 

@@ -3,6 +3,7 @@ type: hub
 slug: ci-cd
 title: CI/CD
 description: Автоматизация деплоя, структура пайплайна и проверки сборки.
+draft: true
 hub:
   - "operations"
 order: 30

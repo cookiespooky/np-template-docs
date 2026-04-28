@@ -3,6 +3,7 @@ type: article
 slug: obsidian-markdown-syntax
 title: Справочник синтаксиса Obsidian Markdown
 description: Тестовая страница синтаксиса с явным статусом поддержки в этом шаблоне Notepub.
+draft: true
 hub:
   - "authoring"
 order: 99

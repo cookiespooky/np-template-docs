@@ -3,6 +3,7 @@ type: article
 slug: links-and-wikilinks
 title: Ссылки и викиссылки
 description: Паттерны внутренней перелинковки и wiki-ссылки.
+draft: true
 hub:
   - "authoring"
 order: 10

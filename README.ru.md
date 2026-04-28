@@ -17,11 +17,13 @@
 
 ## Что должен знать пользователь шаблона
 
-- обязательный frontmatter для контентной страницы: `type`, `slug`, `title`
-- основные типы страниц: `home`, `hub`, `article`, `page`, `search`, `footer`
-- референс по синтаксису markdown/Obsidian: `content/obsidian-markdown-syntax.md`
-- пошаговый сценарий от **Use this template** до деплоя через Obsidian Git plugin: `content/getting-started.md`
-- страница про движок и ссылки на официальную документацию: `content/notepub-engine.md`
+- главная страница `content/home.md` работает как лендинг шаблона
+- пошаговый сценарий от **Use this template** до публикации: `content/start.md`
+- публикация через Commit в Obsidian Git plugin: `content/publishing.md`
+- объяснение логики “заметка -> страница”: `content/how-it-works.md`
+- SEO-страница для нетехнического пользователя: `content/seo.md`
+- визуальное соответствие “vault -> сайт”: `content/site-preview.md`
+- техничка изолирована в `content/dev/`
 
 Официальные ссылки на движок:
 
@@ -37,6 +39,8 @@
 5. Редактируйте только `content/`, `media/`, `Site.md` и `Interface.md`.
 6. Коммитьте и пушьте любым удобным Git-потоком (например через Obsidian Git plugin).
 7. GitHub Actions собирает и публикует сайт в GitHub Pages.
+
+Для нетехнического UX начните сразу с `content/home.md` и затем переходите в `start.md`.
 
 ## Что обновлено под новый движок
 

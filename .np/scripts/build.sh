@@ -7,10 +7,40 @@ cd "$ROOT"
 BIN="${NOTEPUB_BIN:-notepub}"
 CFG="${NOTEPUB_CONFIG:-./.np/config.yaml}"
 RULES="${NOTEPUB_RULES:-./.np/rules.yaml}"
-ART="./.notepub/artifacts"
-OUT="./.np/dist"
-CONTENT_DIR="./content"
-MEDIA_DIR="./media"
+ART="${NOTEPUB_ARTIFACTS_DIR:-./.notepub/artifacts}"
+OUT="${NOTEPUB_DIST_DIR:-./.np/dist}"
+
+resolve_content_dir() {
+  python3 - "$CFG" <<'PY'
+import re
+import sys
+from pathlib import Path
+
+cfg = Path(sys.argv[1])
+if not cfg.exists():
+    print("./content")
+    raise SystemExit(0)
+
+lines = cfg.read_text(encoding="utf-8").splitlines()
+in_content = False
+for line in lines:
+    if re.match(r'^content:\s*$', line):
+        in_content = True
+        continue
+    if in_content and re.match(r'^[A-Za-z_][A-Za-z0-9_]*:\s*$', line):
+        in_content = False
+    if in_content:
+        m = re.match(r'^\s{2}local_dir:\s*(.+?)\s*$', line)
+        if m:
+            value = m.group(1).strip().strip('"').strip("'")
+            print(value or "./content")
+            raise SystemExit(0)
+print("./content")
+PY
+}
+
+CONTENT_DIR="${NOTEPUB_CONTENT_DIR:-$(resolve_content_dir)}"
+MEDIA_DIR="${NOTEPUB_MEDIA_DIR:-./media}"
 
 infer_custom_domain_base_url() {
   local cname="${ROOT}/CNAME"

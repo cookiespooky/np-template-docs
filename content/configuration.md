@@ -3,6 +3,7 @@ type: article
 slug: configuration
 title: Конфигурация
 description: Ключевые настройки в config.yaml и rules.yaml.
+draft: true
 hub:
   - "reference"
 order: 10

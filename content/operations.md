@@ -3,6 +3,7 @@ type: hub
 slug: operations
 title: Операции
 description: Сборка, деплой и устранение проблем.
+draft: true
 order: 40
 ---
 

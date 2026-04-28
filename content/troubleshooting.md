@@ -3,6 +3,7 @@ type: article
 slug: troubleshooting
 title: Устранение проблем
 description: Частые проблемы и практические решения.
+draft: true
 hub:
   - "operations"
 order: 20

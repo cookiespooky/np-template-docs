@@ -75,7 +75,7 @@ With `runtime.mode: auto`, local serve resolves to dev URLs automatically.
 ## Deploy
 
 Workflow `.github/workflows/deploy.yml` builds and deploys automatically.
-CI uses pinned Notepub release binaries (`v0.1.5`) from GitHub Releases.
+CI uses pinned Notepub release binaries (`v0.1.6`) from GitHub Releases.
 
 Additional quality gate workflow `.github/workflows/quality-gate.yml` runs matrix checks before release-sensitive merges:
 

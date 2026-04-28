@@ -49,6 +49,9 @@ settings:
   ui_not_found_back: "Back to Home"
   ui_error_title: "Error"
   ui_error_lead: "The template could not render this page. Reason is below."
+overrides:
+  site_note: "../Site.md"
+  interface_note: "../Interface.md"
 content:
   source: "local"
   local_dir: "../content"

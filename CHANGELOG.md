@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-04-29
+
+### Changed
+
+- Synced template infrastructure with Notepub `v0.1.6`:
+  - updated deploy and quality-gate workflows to `NOTEPUB_VERSION: v0.1.6`.
+- Applied latest `template update` for modern layout (`.np/*`):
+  - refreshed `.np/scripts/build.sh` to resolve `content.local_dir` from `.np/config.yaml`,
+  - removed hard dependency on fixed `./content` in template-owned build logic,
+  - kept compatibility mirror output to `./dist`.
+- Updated deploy workflow content sync to resolve content directory from config before external repo sync, so custom `content.local_dir` no longer breaks CI content import.
+
+### Verified
+
+- Local build passes in all compatibility modes with current content state:
+  - `NOTEPUB_COMPAT_MODE=auto`
+  - `NOTEPUB_COMPAT_MODE=modern`
+  - `NOTEPUB_COMPAT_MODE=legacy`
+- S3 effective config remains valid against current rules (`notepub validate --config .np/config.effective.yaml --rules .np/rules.yaml`).
+
 ## 2026-04-27
 
 ### Fixed
@@ -50,6 +70,14 @@
   - translated `content/home.md` and updated starter navigation to key docs,
   - added `content/notepub-engine.md` with links to Notepub site and engine Getting Started docs,
   - added a summary section in `README.ru.md` linking frontmatter/types/syntax/start/engine docs.
+- Reworked template UX to landing-first flow for non-technical Obsidian users:
+  - replaced user-facing content layer with `home.md`, `start.md`, `publishing.md`, `how-it-works.md`, `seo.md`, `site-preview.md`, and `example-post.md`,
+  - added isolated developer hub in `content/dev/` (`index.md`, `rules.md`, `config.md`, `deploy.md`),
+  - moved onboarding to screenshot-based step flow from `Use this template` to publish via Obsidian Git plugin,
+  - kept screenshots colocated with notes under `content/`,
+  - marked previous technical docs as `draft: true` to keep them out of user navigation/search/sitemap.
+- Added Russian `Site.md` and `Interface.md` note baselines in template consumers after `template update`.
+- Updated frontmatter examples to Obsidian-native flat syntax (no nested YAML lists in user-facing examples).
 
 ## 2026-04-24
 
