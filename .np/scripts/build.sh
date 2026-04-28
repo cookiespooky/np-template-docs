@@ -18,7 +18,7 @@ from pathlib import Path
 
 cfg = Path(sys.argv[1])
 if not cfg.exists():
-    print("./content")
+    print(str(Path("./content").resolve()))
     raise SystemExit(0)
 
 lines = cfg.read_text(encoding="utf-8").splitlines()
@@ -33,9 +33,16 @@ for line in lines:
         m = re.match(r'^\s{2}local_dir:\s*(.+?)\s*$', line)
         if m:
             value = m.group(1).strip().strip('"').strip("'")
-            print(value or "./content")
+            target = Path(value or "./content")
+            if not target.is_absolute():
+                target = (cfg.parent / target).resolve()
+            print(str(target))
             raise SystemExit(0)
-print("./content")
+
+fallback = Path("./content")
+if not fallback.is_absolute():
+    fallback = (cfg.parent / fallback).resolve()
+print(str(fallback))
 PY
 }
 
