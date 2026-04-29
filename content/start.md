@@ -19,7 +19,7 @@ related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 
 ## Шаг 2. Создайте репозиторий из шаблона
 
-После Use this template сделайте создание репозитория.
+После Use this template дайте название вашему репозиторию и сохраните.
 
 ![Create repository from template](/media/create-repo.webp)
 

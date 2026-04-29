@@ -4,7 +4,7 @@ slug: example-post
 title: Свойства страницы
 description: Какие поля frontmatter управляют страницей и как их заполнять.
 order: 60
-related: ["start", "publishing", "how-it-works", "seo", "content-model"]
+related: ["start", "publishing", "how-it-works", "seo", "home"]
 ---
 
 # Свойства страницы
@@ -29,7 +29,7 @@ related:
 
 ## Что значит каждое свойство
 
-- `type` — тип страницы по правилам шаблона. Для обычной страницы используйте `page`.
+- `type` — тип страницы по правилам шаблона. Для обычной страницы используйте `article`.
 - `slug` — адрес страницы в URL.  
   Пример: `slug: my-first-note` → `/my-first-note/`.
 - `title` — заголовок страницы (виден в контенте, списках и поиске).
@@ -53,5 +53,5 @@ related:
 ## Что дальше
 
 - [[publishing|Опубликовать изменения]]
-- [[content-model|Открыть модель контента]]
+- [[home|Вернуться на главную]]
 - [[start|Вернуться к быстрому старту]]
