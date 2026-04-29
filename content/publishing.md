@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: publishing
 title: Публикация
 description: Как обновляется сайт после Commit в Obsidian.

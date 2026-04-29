@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: getting-started
 title: Быстрый старт (legacy)
 description: Путь от Use this template до деплоя в GitHub Pages.

@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: seo
 title: SEO
 description: Почему страницы из заметок хорошо индексируются.

@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: how-it-works
 title: Как это работает
 description: "Простая схема: заметки и ссылки превращаются в сайт."

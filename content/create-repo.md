@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: create-repo
 title: Создание репозитория из шаблона
 description: Шаг создания репозитория после Use this template.

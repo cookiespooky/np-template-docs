@@ -112,7 +112,7 @@ collections:
     where:
       all:
         - fm_eq: { key: "draft", value: false }
-        - type_in: ["page"]
+        - type_in: ["page", "article"]
     sort:
       by: "fm.order"
       dir: "asc"

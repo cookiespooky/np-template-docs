@@ -1,5 +1,5 @@
 ---
-type: page
+type: article
 slug: start
 title: Быстрый старт
 description: Пошаговый запуск от шаблона до первой публикации.
