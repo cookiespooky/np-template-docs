@@ -17,25 +17,31 @@ related: ["home", "publishing", "site-preview", "how-it-works", "seo"]
 
 ![Use this template](/media/use_this_template.webp)
 
-## Шаг 2. Установите GitHub Desktop
+## Шаг 2. Создайте репозиторий из шаблона
+
+После Use this template сделайте создание репозитория.
+
+![Create repository from template](/media/create-repo.webp)
+
+## Шаг 3. Установите GitHub Desktop
 
 Сделайте установку и вход в свой GitHub-аккаунт.
 
 ![GitHub Desktop](/media/github_desktop1.webp)
 
-## Шаг 3. Склонируйте репозиторий
+## Шаг 4. Склонируйте репозиторий
 
 Сделайте клон репозитория на компьютер.
 
 ![Клонирование репозитория](/media/github_desktop2.webp)
 
-## Шаг 4. Откройте папку как vault в Obsidian
+## Шаг 5. Откройте папку как vault в Obsidian
 
 Сделайте открытие папки репозитория как vault.
 
 ![Открытие папки как vault](/media/obsidian_open_as_vault.webp)
 
-## Шаг 5. Установите Obsidian Git plugin
+## Шаг 6. Установите Obsidian Git plugin
 
 Сделайте включение Community plugins и установите плагин Git.
 
@@ -47,13 +53,13 @@ related: ["home", "publishing", "site-preview", "how-it-works", "seo"]
 
 ![Включение Obsidian Git](/media/obsidian_git_enable.webp)
 
-## Шаг 6. Сделайте Commit
+## Шаг 7. Сделайте Commit
 
 Сделайте изменение в любой заметке и выполните Commit через плагин.
 
 ![Commit в Obsidian](/media/obsidian_commit.webp)
 
-## Шаг 7. Сайт опубликован
+## Шаг 8. Сайт опубликован
 
 После Commit сайт обновится автоматически.
 
