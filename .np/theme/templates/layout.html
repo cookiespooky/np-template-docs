@@ -241,7 +241,15 @@
             <ul class="sidebar-sublist sidebar-root">
               {{- range $pages }}
                 {{- if ne .Slug "footer" }}
+                {{- $hasHub := false -}}
+                {{- with (index .FM "hub") -}}
+                  {{- if gt (len .) 0 -}}
+                    {{- $hasHub = true -}}
+                  {{- end -}}
+                {{- end -}}
+                {{- if not $hasHub }}
               <li><a class="{{ if eq .Slug $.Page.Slug }}is-active{{ end }}" href="{{ printf "%s%s" $.BaseURL .Path }}">{{ .Title }}</a></li>
+                {{- end }}
                 {{- end }}
               {{- end }}
             </ul>
@@ -281,7 +289,15 @@
             <ul class="sidebar-sublist sidebar-root">
               {{- range $pages }}
                 {{- if ne .Slug "footer" }}
+                {{- $hasHub := false -}}
+                {{- with (index .FM "hub") -}}
+                  {{- if gt (len .) 0 -}}
+                    {{- $hasHub = true -}}
+                  {{- end -}}
+                {{- end -}}
+                {{- if not $hasHub }}
               <li><a class="{{ if eq .Slug $.Page.Slug }}is-active{{ end }}" href="{{ printf "%s%s" $.BaseURL .Path }}">{{ .Title }}</a></li>
+                {{- end }}
                 {{- end }}
               {{- end }}
             </ul>

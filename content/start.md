@@ -17,8 +17,6 @@ related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 
 ![Use this template](/media/use_this_template.webp)
 
-![Commit в Obsidian](/media/obsidian_commit.webp)
-
 ## Шаг 2. Создайте репозиторий из шаблона
 
 После Use this template сделайте создание репозитория.
@@ -27,7 +25,7 @@ related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 
 ## Шаг 3. Установите GitHub Desktop
 
-Сделайте установку и вход в свой GitHub-аккаунт.
+Установите GitHub Desktop и войдите в свой GitHub-аккаунт.
 
 ![GitHub Desktop](/media/github_desktop1.webp)
 
@@ -39,13 +37,13 @@ related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 
 ## Шаг 5. Откройте папку как vault в Obsidian
 
-Сделайте открытие папки репозитория как vault.
+Откройте папку полученного репозитория как хранилище в Obsidian.
 
 ![Открытие папки как vault](/media/obsidian_open_as_vault.webp)
 
 ## Шаг 6. Установите Obsidian Git plugin
 
-Сделайте включение Community plugins и установите плагин Git.
+Включите Community plugins в настройках Obsidian и установите плагин Git.
 
 ![Включение плагинов](/media/obsidian_plugins_enable.webp)
 
@@ -62,6 +60,6 @@ related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 ## Что дальше
 
 - [[publishing|Как работает публикация]]
-- [[how-it-works|Как заметки становятся сайтом]]
 - [[example-post|Свойства страницы]]
+- [[how-it-works|Как заметки становятся сайтом]]
 - [[seo|Почему SEO уже работает]]
