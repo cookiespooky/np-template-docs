@@ -194,6 +194,14 @@
         if (link.closest('.content')) {
           link.classList.add('is-external');
         }
+      } else {
+        link.classList.remove('is-external');
+        if (link.getAttribute('target') === '_blank') {
+          link.removeAttribute('target');
+        }
+        if ((link.getAttribute('rel') || '').toLowerCase() === 'noopener noreferrer') {
+          link.removeAttribute('rel');
+        }
       }
     });
   }
