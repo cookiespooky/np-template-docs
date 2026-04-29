@@ -4,7 +4,7 @@ slug: seo
 title: SEO
 description: Почему страницы из заметок хорошо индексируются.
 order: 40
-related: ["home", "start", "publishing", "how-it-works", "site-preview"]
+related: ["home", "start", "publishing", "how-it-works", "example-post"]
 ---
 
 # SEO
@@ -31,6 +31,6 @@ related: ["home", "start", "publishing", "how-it-works", "site-preview"]
 
 ## Что дальше
 
-- [[site-preview|Посмотреть итоговый вид сайта]]
+- [[example-post|Посмотреть свойства страницы]]
 - [[publishing|Понять цикл обновлений]]
 - [[start|Вернуться к пошаговому запуску]]

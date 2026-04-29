@@ -4,7 +4,7 @@ slug: home
 title: Сайт из Obsidian за 5 минут
 description: "Сайт из Obsidian, Obsidian publish бесплатно, markdown-сайт без CMS и серверов."
 image: /media/notepub_cover.png
-related: ["start", "site-preview", "how-it-works", "seo", "publishing"]
+related: ["start", "how-it-works", "seo", "publishing", "example-post"]
 ---
 
 # Создайте сайт из Obsidian за 5 минут
@@ -17,7 +17,7 @@ related: ["start", "site-preview", "how-it-works", "seo", "publishing"]
 достаточно заменить контент на свой.
 
 [➜ Быстрый старт](/start/)  
-[➜ Посмотреть пример сайта](/site-preview/)  
+[➜ Свойства страницы](/example-post/)  
 [➜ Как это работает](/how-it-works/)
 
 ## Вы получите такой сайт
@@ -64,7 +64,7 @@ related: ["start", "site-preview", "how-it-works", "seo", "publishing"]
 - [[publishing|Публикация]]
 - [[how-it-works|Как это работает]]
 - [[seo|SEO]]
-- [[site-preview|Пример сайта]]
+- [[example-post|Свойства страницы]]
 - [[index|Для разработчиков]]
 
 ## Для SEO и поиска

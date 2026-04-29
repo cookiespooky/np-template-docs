@@ -4,7 +4,7 @@ slug: start
 title: Быстрый старт
 description: Пошаговый запуск от шаблона до первой публикации.
 order: 10
-related: ["home", "publishing", "site-preview", "how-it-works", "seo"]
+related: ["home", "publishing", "how-it-works", "seo", "example-post"]
 ---
 
 # Быстрый старт
@@ -16,6 +16,8 @@ related: ["home", "publishing", "site-preview", "how-it-works", "seo"]
 Сделайте шаблон своим репозиторием.
 
 ![Use this template](/media/use_this_template.webp)
+
+![Commit в Obsidian](/media/obsidian_commit.webp)
 
 ## Шаг 2. Создайте репозиторий из шаблона
 
@@ -53,21 +55,13 @@ related: ["home", "publishing", "site-preview", "how-it-works", "seo"]
 
 ![Включение Obsidian Git](/media/obsidian_git_enable.webp)
 
-## Шаг 7. Сделайте Commit
+## Шаг 7. Commit and Sync — публикация запущена
 
-Сделайте изменение в любой заметке и выполните Commit через плагин.
-
-![Commit в Obsidian](/media/obsidian_commit.webp)
-
-## Шаг 8. Сайт опубликован
-
-После Commit сайт обновится автоматически.
-
-![Сайт в GitHub Pages](/media/github_pages1.webp)
+После Commit and Sync сайт опубликуется в течение минуты. Процесс можно наблюдать в разделе **Actions** в GitHub-репозитории.
 
 ## Что дальше
 
 - [[publishing|Как работает публикация]]
 - [[how-it-works|Как заметки становятся сайтом]]
-- [[site-preview|Что именно вы получите]]
+- [[example-post|Свойства страницы]]
 - [[seo|Почему SEO уже работает]]

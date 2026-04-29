@@ -4,7 +4,7 @@ slug: publishing
 title: Публикация
 description: Как обновляется сайт после Commit в Obsidian.
 order: 20
-related: ["home", "start", "site-preview", "seo", "how-it-works"]
+related: ["home", "start", "seo", "how-it-works", "example-post"]
 ---
 
 # Публикация
@@ -36,5 +36,5 @@ related: ["home", "start", "site-preview", "seo", "how-it-works"]
 ## Что дальше
 
 - [[start|Вернуться к шагам старта]]
-- [[site-preview|Посмотреть результат на примере]]
+- [[example-post|Посмотреть свойства страницы]]
 - [[seo|Посмотреть SEO-возможности]]

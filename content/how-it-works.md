@@ -2,9 +2,9 @@
 type: page
 slug: how-it-works
 title: Как это работает
-description: "Простая схема: заметки, папки и ссылки превращаются в сайт."
+description: "Простая схема: заметки и ссылки превращаются в сайт."
 order: 30
-related: ["home", "start", "publishing", "seo", "site-preview"]
+related: ["home", "start", "publishing", "seo", "example-post"]
 ---
 
 # Как это работает
@@ -12,8 +12,8 @@ related: ["home", "start", "publishing", "seo", "site-preview"]
 Система работает по простым соответствиям:
 
 - Заметка → страница
-- Папка → категория
 - Ссылка → связь между страницами
+- Папка → удобная организация материалов в вашем vault
 
 ## Что это даёт вам
 
@@ -32,5 +32,5 @@ related: ["home", "start", "publishing", "seo", "site-preview"]
 ## Что дальше
 
 - [[seo|Почему это полезно для SEO]]
-- [[site-preview|Как это выглядит на сайте]]
+- [[example-post|Какие свойства управляют страницей]]
 - [[publishing|Как публикуются изменения]]
