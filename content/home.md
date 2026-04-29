@@ -65,7 +65,7 @@ related: ["start", "site-preview", "how-it-works", "seo", "publishing"]
 - [[how-it-works|Как это работает]]
 - [[seo|SEO]]
 - [[site-preview|Пример сайта]]
-- [[dev/index|Для разработчиков]]
+- [[index|Для разработчиков]]
 
 ## Для SEO и поиска
 
