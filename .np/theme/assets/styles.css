@@ -1389,7 +1389,7 @@ strong {
   display: block;
 }
 
-@media (min-width: 821px) {
+@media (min-width: 901px) {
   .nav-toggle {
     display: none;
   }
@@ -1515,10 +1515,6 @@ body.nav-locked {
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    display: none;
   }
 }
 
