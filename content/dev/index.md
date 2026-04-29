@@ -16,3 +16,5 @@ related: ["home", "start"]
 - [[deploy|Деплой и автоматизация]]
 
 Вернуться в пользовательский слой: [[home|Главная]].
+
+[Подробная документация](https://cookiespooky.github.io/np/ru)
