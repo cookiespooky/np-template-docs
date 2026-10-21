@@ -75,7 +75,7 @@ With `runtime.mode: auto`, local serve resolves to dev URLs automatically.
 ## Deploy
 
 Workflow `.github/workflows/deploy.yml` builds and deploys automatically.
-CI uses pinned Notepub release binaries (`v0.1.6`) from GitHub Releases.
+CI uses pinned Notepub release binaries (`v0.1.9`) from GitHub Releases. Sibling templates on the same base and design tokens: [services site](https://github.com/cookiespooky/np-template-services) and [personal blog](https://github.com/cookiespooky/np-template-blog).
 
 Additional quality gate workflow `.github/workflows/quality-gate.yml` runs matrix checks before release-sensitive merges:
 

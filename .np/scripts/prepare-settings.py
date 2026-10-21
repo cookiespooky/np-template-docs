@@ -197,6 +197,8 @@ def sanitize_ref(settings, key):
 
 def sanitize_color(value, fallback):
     value = str(value or "").strip()
+    if re.match(r"^#[0-9a-fA-F]{3}$", value):
+        value = "#" + "".join(ch * 2 for ch in value[1:])
     if re.match(r"^#[0-9a-fA-F]{6}$", value):
         return value
     return fallback
@@ -232,14 +234,24 @@ def sanitize_font_url(value):
 
 
 def font_stack(name):
+    """Пустое имя или golos — шрифт из tokens.css: свойство --font не переопределяется."""
     name = str(name or "").strip().lower()
+    if name in ("", "golos", "default", "tokens"):
+        return ""
     if name == "inter":
         return "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
     if name == "serif":
         return "Georgia, Cambria, Times New Roman, Times, serif"
     if name == "mono":
         return "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace"
-    return "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+    if name == "system":
+        return "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif"
+    return ""
+
+
+def sanitize_radius(value):
+    value = str(value or "").strip().removesuffix("px")
+    return value if re.match(r"^[0-9]{1,2}$", value) else ""
 
 
 def public_base_urls(config_text):
@@ -276,14 +288,14 @@ def default_settings(config_text):
         "site_icon": "/media/notepub.png",
         "brand_name": title,
         "brand_logo": "/media/notepub.svg",
-        "theme_accent": "#0a0a0a",
-        "theme_link": "#0a0a0a",
-        "theme_font": "system",
-        "theme_heading_font": "system",
-        "theme_font_stack": font_stack("system"),
-        "theme_heading_font_stack": font_stack("system"),
+        "theme_accent": "",
+        "theme_link": "",
+        "theme_font": "",
+        "theme_heading_font": "",
+        "theme_font_stack": "",
+        "theme_heading_font_stack": "",
         "theme_font_url": "",
-        "theme_radius": "14",
+        "theme_radius": "",
         "favicon": "",
         "favicon_16": "",
         "favicon_32": "",
@@ -295,7 +307,7 @@ def default_settings(config_text):
         "manifest_short_name": "",
         "manifest_description": "",
         "manifest_theme_color": "",
-        "manifest_background_color": "#ffffff",
+        "manifest_background_color": "#f5f6f7",
         "manifest_display": "standalone",
         "ui_home": "Home",
         "ui_documentation_navigation": "Documentation navigation",
@@ -360,17 +372,24 @@ def command_notes(config_path):
     config_text = read_text(config_path)
     settings = default_settings(config_text)
     settings.update(parse_simple_yaml_section(config_text, "settings"))
-    settings.update({k: v for k, v in parse_note(ROOT / "Site.md").items() if k in SITE_KEYS})
-    settings.update({k: v for k, v in parse_note(ROOT / "Interface.md").items() if k in INTERFACE_KEYS})
+    # Любое свойство заметок доходит до шаблона: у сайта услуг и блога свои ключи
+    # (контакты, подписи), и список здесь их не знает. Известные ключи — только умолчания.
+    site_note = parse_note(ROOT / "Site.md")
+    interface_note = parse_note(ROOT / "Interface.md")
+    settings.update(site_note)
+    settings.update(interface_note)
+    extra_site_keys = [k for k in site_note if k not in SITE_KEYS]
+    extra_interface_keys = [k for k in interface_note if k not in INTERFACE_KEYS]
 
-    settings["theme_accent"] = sanitize_color(settings.get("theme_accent"), "#0a0a0a")
-    settings["theme_link"] = sanitize_color(settings.get("theme_link"), settings["theme_accent"])
+    settings["theme_accent"] = sanitize_color(settings.get("theme_accent"), "")
+    settings["theme_link"] = sanitize_color(settings.get("theme_link"), "")
+    settings["theme_radius"] = sanitize_radius(settings.get("theme_radius"))
     settings["site_icon"] = sanitize_ref(settings, "site_icon")
     settings["manifest_name"] = settings.get("manifest_name") or settings.get("site_title")
     settings["manifest_short_name"] = settings.get("manifest_short_name") or settings.get("brand_name") or settings.get("site_title")
     settings["manifest_description"] = settings.get("manifest_description") or settings.get("site_description")
-    settings["manifest_theme_color"] = sanitize_color(settings.get("manifest_theme_color"), settings["theme_accent"])
-    settings["manifest_background_color"] = sanitize_color(settings.get("manifest_background_color"), "#ffffff")
+    settings["manifest_theme_color"] = sanitize_color(settings.get("manifest_theme_color"), settings["theme_accent"] or "#3e5368")
+    settings["manifest_background_color"] = sanitize_color(settings.get("manifest_background_color"), "#f5f6f7")
     for key in ["favicon_16", "favicon_32", "apple_touch_icon", "manifest_icon_192", "manifest_icon_512"]:
         if not settings.get(key):
             settings[key] = settings["site_icon"]
@@ -394,14 +413,14 @@ def command_notes(config_path):
     GENERATED_DIR.mkdir(parents=True, exist_ok=True)
     write_note(
         GENERATED_DIR / "Site.generated.md",
-        SITE_KEYS,
+        SITE_KEYS + extra_site_keys,
         note_settings,
         "Generated Site Settings",
         "Generated by `.np/scripts/build.sh`. Edit `Site.md` or `.np/config.yaml` instead.",
     )
     write_note(
         GENERATED_DIR / "Interface.generated.md",
-        INTERFACE_KEYS,
+        INTERFACE_KEYS + extra_interface_keys,
         settings,
         "Generated Interface Settings",
         "Generated by `.np/scripts/build.sh`. Edit `Interface.md` or `.np/config.yaml` instead.",
@@ -487,8 +506,8 @@ def command_assets(config_path, out_path):
                 "type": "image/png",
             },
         ],
-        "theme_color": settings.get("manifest_theme_color") or settings.get("theme_accent") or "#0a0a0a",
-        "background_color": settings.get("manifest_background_color") or "#ffffff",
+        "theme_color": settings.get("manifest_theme_color") or settings.get("theme_accent") or "#3e5368",
+        "background_color": settings.get("manifest_background_color") or "#f5f6f7",
         "display": settings.get("manifest_display") or "standalone",
     }
     (out_assets / "site.webmanifest").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

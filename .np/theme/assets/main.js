@@ -173,6 +173,22 @@
     }, { passive: false });
   }
 
+  // Своя ссылка — тот же адрес, что у открытой страницы, или адрес, с которым собран сайт
+  // (base_url). Второе важно, когда сайт открыт по другому адресу, чем собран: иначе
+  // каждая ссылка меню открывалась бы в новой вкладке.
+  function isInternalURL(url) {
+    if (url.origin === window.location.origin) return true;
+    var base = String(window.__notepubBaseURL || '');
+    if (!base) return false;
+    try {
+      var baseURL = new URL(base.replace(/\/?$/, '/'), window.location.href);
+      return url.origin === baseURL.origin && url.pathname.indexOf(baseURL.pathname) === 0;
+    } catch (_err) {
+      return false;
+    }
+  }
+  window.__notepubIsInternalURL = isInternalURL;
+
   function markExternalLinks(scope) {
     var rootNode = scope || document;
     var links = rootNode.querySelectorAll('a[href]');
@@ -188,7 +204,7 @@
       } catch (_err) {
         return;
       }
-      if (url.origin !== window.location.origin) {
+      if (!isInternalURL(url)) {
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         if (link.closest('.content')) {

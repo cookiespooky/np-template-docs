@@ -1,5 +1,24 @@
-<section class="section">
-  <h1 class="section-title">{{ index .Settings "ui_not_found_title" }}</h1>
-  <p class="lead">{{ index .Settings "ui_not_found_lead" }}</p>
-  <a class="btn" href="{{ .BaseURL }}/">{{ index .Settings "ui_not_found_back" }}</a>
-</section>
+{{- $title := index .Settings "ui_not_found_title" -}}
+<!doctype html>
+<html lang="{{ index .Settings "site_language" }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>{{ $title }} — {{ index .Settings "site_title" }}</title>
+  <link rel="icon" href="{{ .AssetsBase }}/favicon.ico" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/fonts.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/tokens.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
+  {{- template "theme_overrides.html" . }}
+</head>
+<body class="is-page is-notfound">
+  <main class="wrap notfound">
+    <section class="section">
+      <h1 class="section-title">{{ $title }}</h1>
+      <p class="lead">{{ index .Settings "ui_not_found_lead" }}</p>
+      <a class="btn primary" href="{{ .BaseURL }}/">{{ index .Settings "ui_not_found_back" }}</a>
+    </section>
+  </main>
+</body>
+</html>

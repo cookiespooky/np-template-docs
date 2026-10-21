@@ -27,8 +27,10 @@
 
 Официальные ссылки на движок:
 
-- сайт Notepub: <https://cookiespooky.github.io/np/ru>
-- Getting Started в документации движка: <https://cookiespooky.github.io/np/ru/docs/getting-started/>
+- сайт Notepub: <https://antonlozhkin.ru/np/ru/>
+- Getting Started в документации движка: <https://antonlozhkin.ru/np/ru/docs/getting-started/>
+
+Ещё два шаблона на той же основе и с теми же цветами и шрифтами: [сайт услуг](https://github.com/cookiespooky/np-template-services) и [личный блог](https://github.com/cookiespooky/np-template-blog).
 
 ## Быстрый пользовательский путь (Obsidian-first)
 
@@ -72,8 +74,11 @@ NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
 1. генерацию runtime-конфига (опционально, для аналитики)
 2. `notepub index`
 3. `notepub validate --links`
-4. `notepub validate --markdown`
-5. `notepub build`
+4. `notepub validate --markdown` — в том числе вставки `![[файл]]`, которых нет ни в `content/`, ни в `media/`
+5. `notepub validate --seo` — подсказки: нет описания, длинный или повторяющийся заголовок
+6. `notepub build`
+
+В GitHub Actions перед сборкой каждой заметке ставится время её последнего коммита — так в карте сайта у страниц честные даты изменения.
 
 Результат:
 
@@ -83,10 +88,10 @@ NOTEPUB_BIN=/path/to/notepub ./.np/scripts/build.sh
 ## Локальный предпросмотр
 
 ```bash
-NOTEPUB_BIN=/path/to/notepub /path/to/notepub serve --config ./.np/config.yaml --rules ./.np/rules.yaml
+NOTEPUB_BIN=/path/to/notepub ./.np/scripts/preview.sh
 ```
 
-С `runtime.mode: auto` локальный запуск автоматически использует dev URL.
+Собирает сайт и открывает его на `http://127.0.0.1:8080/` (другой порт — `PORT=8090`). После правки заметок запустите снова.
 
 ## Деплой
 
@@ -135,7 +140,7 @@ Repository variables с теми же именами остаются ручны
 
 В режиме `CONTENT_SOURCE=s3` CI формирует `.np/config.effective.yaml` с `content.source: "s3"` и top-level блоком `s3:`, совместимым с загрузкой конфига Notepub.
 
-Для шрифтов доступны простые пресеты `system`, `inter`, `serif`, `mono`. Продвинутый режим позволяет указать CSS font stack:
+Цвета, шрифты и скругления по умолчанию — из `.np/theme/assets/tokens.css`, общего для трёх шаблонов (документация, услуги, блог); шрифты Golos Text и JetBrains Mono лежат в репозитории. `theme_accent` в `Site.md` меняет цвет ссылок и кнопок. Для шрифтов доступны пресеты `system`, `inter`, `serif`, `mono` (пусто — шрифт из токенов). Продвинутый режим позволяет указать CSS font stack:
 
 ```yaml
 theme_font_stack: IBM Plex Sans, Arial, sans-serif

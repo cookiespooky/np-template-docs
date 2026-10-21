@@ -2,7 +2,7 @@
 type: article
 slug: publishing
 title: Публикация
-description: Как обновляется сайт после Commit в Obsidian.
+description: Как сайт обновляется после Commit and Sync в Obsidian и где смотреть ход публикации.
 order: 20
 related: ["home", "start", "seo", "how-it-works", "example-post"]
 ---

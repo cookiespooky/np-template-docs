@@ -1,4 +1,4 @@
-name: Deploy Docs Template to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -20,11 +20,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NOTEPUB_VERSION: v0.1.7
+      NOTEPUB_VERSION: v0.1.9
       NOTEPUB_BIN: ./.np/bin/notepub
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history: build.sh dates every page by its last commit.
+          fetch-depth: 0
 
       - name: Resolve content source config
         id: source

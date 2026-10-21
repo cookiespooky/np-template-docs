@@ -2,7 +2,7 @@
 type: hub
 slug: dev
 title: Для разработчиков
-description: "Технический раздел: правила, конфиг и деплой."
+description: "Технический раздел шаблона: правила маршрутов, конфиг сборки и деплой на GitHub Pages."
 order: 90
 related: ["home", "start"]
 ---
@@ -17,4 +17,4 @@ related: ["home", "start"]
 
 Вернуться в пользовательский слой: [[home|Главная]].
 
-[Подробная документация](https://cookiespooky.github.io/np/ru)
+[Документация движка](https://antonlozhkin.ru/np/ru/docs/)

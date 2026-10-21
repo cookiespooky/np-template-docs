@@ -1,0 +1,35 @@
+/* Дизайн-токены, общие для трёх шаблонов Notepub (документация, услуги, блог) и курса по вайбкодингу:
+   серый фон, один цвет текста, один приглушённый акцент. Файл одинаковый во всех шаблонах —
+   меняйте цвета здесь или через theme_accent в Site.md, а не в стилях шаблона. */
+:root {
+  --paper: #f5f6f7;
+  --paper-2: #eceef0;
+  --surface: #ffffff;
+  --line: #e3e5e7;
+  --line-strong: #c6c9cd;
+  --ink: #1b2128;
+  --ink-1: #3b424a;
+  --ink-2: #4b5158;
+  --muted: #60666d;
+  --muted-2: #7c8289;
+  --muted-3: #999ea4;
+  --accent: #3e5368;
+  --accent-ink: #ffffff;
+  --panel: #1b2128;
+  --panel-ink: #f5f6f7;
+  --panel-muted: #b3b8be;
+  --panel-line: #3b424a;
+  --panel-kicker: #7c8289;
+  --dot-off: #c6c9cd;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  --shell: 1180px;
+  --shell-pad: 40px;
+
+  --font: 'Golos Text', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  color-scheme: light;
+}

@@ -1,22 +1,21 @@
+/* Цвета, шрифты и скругления — из tokens.css (общий файл трёх шаблонов).
+   Здесь только имена, под которыми их знает разметка документации. */
 :root {
-  --bg: #ffffff;
-  --fg: #0a0a0a;
-  --muted: #666666;
-  --muted-2: #888888;
-  --border: #eaeaea;
-  --soft: #f5f5f5;
-  --soft-2: #fafafa;
-  --accent: #0a0a0a;
-  --link: #0a0a0a;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --font-heading: var(--font-sans);
-  --shadow: 0 1px 2px rgba(0, 0, 0, .04);
-  --radius: 14px;
-  --content-block-border: 1px solid var(--border);
-  --content-block-radius: 8px;
-  --content-block-bg: var(--soft);
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --muted-2: var(--muted-2);
+  --border: var(--line);
+  --soft: var(--paper-2);
+  --soft-2: var(--surface);
+  --link: var(--accent);
+  --font-sans: var(--font);
+  --font-heading: var(--font);
+  --shadow: 0 1px 2px rgba(27, 33, 40, .04);
+  --content-block-border: 1px solid var(--line);
+  --content-block-radius: var(--radius-sm);
+  --content-block-bg: var(--surface);
   --content-block-accent-width: 4px;
-  --max: 980px;
+  --max: var(--shell);
   --header-height: 64px;
 }
 
@@ -176,7 +175,7 @@ header {
   left: 0;
   right: 0;
   backdrop-filter: saturate(180%) blur(10px);
-  background: rgba(255, 255, 255, .8);
+  background: rgba(245, 246, 247, .86);
   border-bottom: 1px solid var(--border);
   z-index: 50;
 }
@@ -307,7 +306,7 @@ body.is-home .kicker {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: #0a0a0a;
+  background: var(--accent);
   opacity: .9;
   margin-top: 7px;
   flex: 0 0 8px;
@@ -374,12 +373,12 @@ body.is-home #support-cta .card p {
 
 .btn.primary {
   background: var(--fg);
-  color: #fff;
+  color: var(--accent-ink);
   border-color: var(--fg);
 }
 
 .btn.primary:hover {
-  background: #111;
+  background: var(--ink-1);
 }
 
 .btn .icon {
@@ -423,7 +422,7 @@ body.is-home #support-cta .card p {
 
 .card-link:hover {
   text-decoration: none;
-  border-color: #dcdcdc;
+  border-color: var(--line-strong);
 }
 
 .grid-3 .card {
@@ -675,15 +674,15 @@ strong {
 
 /* Code-ish block */
 .code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 13px;
   border: 1px solid var(--border);
-  background: #fff;
-  border-radius: 12px;
+  background: var(--surface);
+  border-radius: var(--radius);
   padding: 14px;
   overflow: auto;
   box-shadow: var(--shadow);
-  color: #111;
+  color: var(--ink);
   line-height: 1.5;
 }
 
@@ -717,14 +716,14 @@ strong {
 }
 
 .content a {
-  color: #0b57d0;
+  color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
 }
 
 .content a:hover {
-  color: #0845a6;
+  color: var(--ink);
   text-decoration-thickness: 2px;
 }
 
@@ -771,7 +770,7 @@ strong {
 }
 
 .content code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 14px;
 }
 
@@ -896,9 +895,9 @@ strong {
 }
 
 .mode-pill.essay {
-  background: #f6f1ff;
-  border-color: #e7dbff;
-  color: #4b2a83;
+  background: var(--paper-2);
+  border-color: var(--line);
+  color: var(--ink-1);
 }
 
 .card-meta {
@@ -949,7 +948,7 @@ strong {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
-  background: #fff;
+  background: var(--surface);
   box-shadow: 0 20px 60px rgba(0, 0, 0, .12);
 }
 
@@ -1016,7 +1015,7 @@ strong {
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   cursor: pointer;
 }
 
@@ -1086,7 +1085,7 @@ strong {
   display: none;
   margin-top: 10px;
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   box-shadow: var(--shadow);
   max-height: 320px;
   overflow-y: auto;
@@ -1128,7 +1127,7 @@ strong {
   padding: 10px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   text-decoration: none;
   box-shadow: var(--shadow);
 }
@@ -1212,7 +1211,7 @@ strong {
   left: 0;
   right: 0;
   backdrop-filter: saturate(180%) blur(10px);
-  background: rgba(255, 255, 255, .8);
+  background: rgba(245, 246, 247, .86);
   border-bottom: 1px solid var(--border);
   z-index: 1200;
 }
@@ -1230,7 +1229,7 @@ strong {
   padding: 8px 12px;
   border-radius: 999px;
   font-size: 0.9rem;
-  background: #fff;
+  background: var(--surface);
 }
 
 .home-button:hover {
@@ -1251,7 +1250,7 @@ strong {
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 2px;
-  background: #fff;
+  background: var(--surface);
 }
 
 .lang-switch a {
@@ -1274,7 +1273,7 @@ strong {
 
 .lang-switch a.is-active {
   background: var(--fg);
-  color: #fff;
+  color: var(--accent-ink);
 }
 
 .mobile-lang-switch {
@@ -1341,7 +1340,7 @@ strong {
 
 .icon-button {
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--surface);
   color: var(--fg);
   width: 36px;
   height: 36px;
@@ -1426,7 +1425,7 @@ strong {
 .mobile-nav-inner {
   position: relative;
   height: 100%;
-  background: #fff;
+  background: var(--surface);
   padding: 14px 20px 20px;
   display: flex;
   flex-direction: column;
@@ -1558,4 +1557,19 @@ body.nav-locked {
     border-left: 0;
     padding-left: 0;
   }
+}
+
+/* 404: отдельная страница без шапки и меню */
+body.is-notfound {
+  padding-top: 0;
+}
+
+.notfound {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.notfound .section {
+  max-width: 560px;
 }

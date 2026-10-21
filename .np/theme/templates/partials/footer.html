@@ -26,7 +26,8 @@
         if (!href || href.indexOf('#') === 0 || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
         try {
           var url = new URL(href, window.location.href);
-          if (url.origin !== window.location.origin) {
+          var internal = window.__notepubIsInternalURL ? window.__notepubIsInternalURL(url) : url.origin === window.location.origin;
+          if (!internal) {
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             if (link.closest('.content')) {

@@ -101,19 +101,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ .AssetsBase }}/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="{{ .AssetsBase }}/favicon-16x16.png" />
   <link rel="icon" href="{{ .AssetsBase }}/favicon.ico" />
-  <link rel="mask-icon" href="{{ .AssetsBase }}/notepub.svg" color="{{ index .Settings "theme_accent" }}" />
+  <link rel="mask-icon" href="{{ .AssetsBase }}/notepub.svg" color="{{ with index .Settings "theme_accent" }}{{ . }}{{ else }}#3e5368{{ end }}" />
   <link rel="manifest" href="{{ .AssetsBase }}/site.webmanifest" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/fonts.css" />
+  <link rel="stylesheet" href="{{ .AssetsBase }}/tokens.css" />
   <link rel="stylesheet" href="{{ .AssetsBase }}/styles.css" />
-  {{- with (index .Settings "theme_font_url") }}<link rel="stylesheet" href="{{ . }}" />{{- end }}
-  <style>
-    :root {
-      --accent: {{ index .Settings "theme_accent" }};
-      --link: {{ index .Settings "theme_link" }};
-      --radius: {{ index .Settings "theme_radius" }}px;
-      --font-sans: {{ index .Settings "theme_font_stack" }};
-      --font-heading: {{ index .Settings "theme_heading_font_stack" }};
-    }
-  </style>
+  {{- template "theme_overrides.html" . }}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -121,7 +114,13 @@
   {{- if .Meta.Robots }}<meta name="robots" content="{{ .Meta.Robots }}" />{{- end }}
   {{- if .Canonical }}<link rel="canonical" href="{{ .Canonical }}" />{{- end }}
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ .Title }}" />
+  <meta name="twitter:title" content="{{ .Meta.Title }}" />
+  {{- range .Meta.Alternates }}
+  <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .URL }}" />
+  {{- end }}
+  {{- if .FeedURL }}
+  <link rel="alternate" type="application/rss+xml" title="{{ $siteTitle }}" href="{{ .FeedURL }}" />
+  {{- end }}
   {{- if .Page.Description }}<meta name="twitter:description" content="{{ .Page.Description }}" />{{- end }}
   {{- range .Meta.OpenGraph -}}
     {{- if and (ne .Key "og:image") (ne .Key "og:image:alt") }}
@@ -222,7 +221,7 @@
       closeNavigation: {{ index .Settings "ui_close_navigation" }}
     };
   </script>
-  <title>{{ .Title }}</title>
+  <title>{{ .Meta.Title }}</title>
 </head>
 
 <body class="{{ if $isHome }}is-home{{ else }}is-page{{ end }}">

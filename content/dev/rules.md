@@ -2,7 +2,7 @@
 type: article
 slug: dev-rules
 title: Правила маршрутов и типов
-description: Описание файла .np/rules.yaml и модели контента.
+description: Что описывает файл .np/rules.yaml — типы страниц, адреса, связи и коллекции.
 hub: ["dev"]
 order: 10
 related: ["dev-config", "dev-deploy", "dev"]

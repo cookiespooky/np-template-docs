@@ -1,0 +1,29 @@
+{{ define "theme_overrides.html" }}
+{{- /* Общий для трёх шаблонов: цвета и шрифт из Site.md поверх tokens.css. Пустое свойство не выводится —
+       тогда работают токены. */ -}}
+{{- $accent := index .Settings "theme_accent" -}}
+{{- $link := index .Settings "theme_link" -}}
+{{- $radius := index .Settings "theme_radius" -}}
+{{- $font := index .Settings "theme_font_stack" -}}
+{{- with (index .Settings "theme_font_url") }}
+  <link rel="stylesheet" href="{{ . }}" />
+{{- end }}
+{{- if or $accent $link $radius $font }}
+  <style>
+    :root {
+      {{- with $accent }}
+      --accent: {{ . }};
+      {{- end }}
+      {{- with $link }}
+      --link: {{ . }};
+      {{- end }}
+      {{- with $radius }}
+      --radius: {{ . }}px;
+      {{- end }}
+      {{- with $font }}
+      --font: {{ . }};
+      {{- end }}
+    }
+  </style>
+{{- end }}
+{{ end }}

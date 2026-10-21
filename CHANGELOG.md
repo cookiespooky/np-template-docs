@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-21
+
+### Changed
+
+- Notepub `v0.1.9`: sitemap dates come from each note's last commit (the workflow checks out full history),
+  the build runs `validate --seo`, `![[file]]` finds a file by name in `content/` and `media/` as Obsidian does.
+- Colours, fonts and radii come from `tokens.css`, shared by the three Notepub templates (docs, services,
+  blog); Golos Text and JetBrains Mono are bundled instead of Mulish from Google Fonts. Empty
+  `theme_accent` / `theme_font` in `Site.md` mean "use the tokens".
+- `prepare-settings.py` passes every property of `Site.md` and `Interface.md` to the theme, not only known keys.
+- `.np/scripts/preview.sh` builds and serves the site locally.
+
+### Fixed
+
+- Every link opened in a new tab when the site was served at another address than it was built for
+  (the account's custom domain): a link to the site's own `base_url` now counts as internal.
+- `404.html` was a bare fragment without styles; it is a full page with `noindex`.
+
 ## 2026-04-29
 
 ### Changed
