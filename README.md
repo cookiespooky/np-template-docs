@@ -159,3 +159,7 @@ site:
 ```
 
 When enabled, runtime config JS is generated during build and injected by frontend code.
+
+## License
+
+MIT — see [LICENSE](LICENSE). The bundled Golos Text and JetBrains Mono fonts are under the SIL Open Font License, see `.np/theme/assets/fonts/README.md`.
