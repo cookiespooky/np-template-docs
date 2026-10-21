@@ -409,6 +409,11 @@ def command_notes(config_path):
     note_settings = dict(settings)
     for key in ASSET_FALLBACKS:
         note_settings[key] = public_ref(settings.get(key, ""), base_url, media_base_url)
+    # Свои свойства Site.md с путём к файлу (author_photo и подобные) — тоже полным адресом,
+    # иначе на сайте под путём (/repo/) картинка ищется от корня домена.
+    for key, value in settings.items():
+        if key not in ASSET_FALLBACKS and isinstance(value, str) and value.startswith(("/media/", "/assets/")):
+            note_settings[key] = public_ref(value, base_url, media_base_url)
 
     GENERATED_DIR.mkdir(parents=True, exist_ok=True)
     write_note(
