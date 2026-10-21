@@ -1,0 +1,7 @@
+{{ define "demo_bar.html" }}
+{{- /* Общий для трёх шаблонов: полоса над шапкой демо со ссылкой на репозиторий шаблона.
+       Видна, только пока в Site.md заполнено demo_repo; удалите его — полоса исчезнет. */ -}}
+{{- with index .Settings "demo_repo" }}
+  <a class="np-demo-bar" href="{{ . }}" target="_blank" rel="noopener">{{ or (index $.Settings "demo_repo_label") "Это демо шаблона Notepub. Взять шаблон на GitHub →" }}</a>
+{{- end }}
+{{ end }}

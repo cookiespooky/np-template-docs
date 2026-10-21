@@ -13,6 +13,16 @@
   {{- template "theme_overrides.html" . }}
 </head>
 <body class="is-page is-notfound">
+  {{ template "demo_bar.html" . }}
+  {{- $brandLogo := index .Settings "brand_logo" }}{{ if eq $brandLogo "" }}{{ $brandLogo = printf "%s/notepub.svg" .AssetsBase }}{{ end }}
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{{ .BaseURL }}/">
+        <span class="logo" aria-hidden="true"><img src="{{ $brandLogo }}" alt="" /></span>
+        <span>{{ index .Settings "brand_name" }}</span>
+      </a>
+    </div>
+  </header>
   <main class="wrap notfound">
     <section class="section">
       <h1 class="section-title">{{ $title }}</h1>

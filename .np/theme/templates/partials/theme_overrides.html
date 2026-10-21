@@ -26,4 +26,20 @@
     }
   </style>
 {{- end }}
+{{- if index .Settings "demo_repo" }}
+  <style>
+    .np-demo-bar {
+      display: block;
+      padding: 8px 16px;
+      background: var(--ink);
+      color: var(--paper);
+      font: 500 14px/1.4 var(--font);
+      text-align: center;
+      text-decoration: none;
+    }
+    .np-demo-bar:hover {
+      text-decoration: underline;
+    }
+  </style>
+{{- end }}
 {{ end }}

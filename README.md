@@ -22,6 +22,7 @@ This layout is Obsidian-friendly: users mostly edit `content/`, `media/`, `Site.
 3. Open the repository folder as an Obsidian vault.
 4. In Obsidian, disable hidden files so `.np/` and `.notepub/` stay out of the editor workflow.
 5. Edit only `content/`, `media/`, `Site.md`, and `Interface.md`.
+   In `Site.md`, delete `demo_repo` — it shows the demo bar that links back to this template.
 6. Commit and push with your preferred Git workflow (for example Obsidian Git plugin).
 7. GitHub Actions builds and publishes the site to GitHub Pages.
 

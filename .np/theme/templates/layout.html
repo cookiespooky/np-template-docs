@@ -225,6 +225,7 @@
 </head>
 
 <body class="{{ if $isHome }}is-home{{ else }}is-page{{ end }}">
+  {{ template "demo_bar.html" . }}
   {{ template "header.html" . }}
 
   {{- $pages := .Collections.nav_pages.Items }}

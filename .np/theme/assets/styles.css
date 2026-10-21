@@ -1560,14 +1560,27 @@ body.nav-locked {
 }
 
 /* 404: отдельная страница без шапки и меню */
-body.is-notfound {
-  padding-top: 0;
+.notfound {
+  padding-top: 72px;
+  padding-bottom: 96px;
 }
 
-.notfound {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+.notfound .section-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  text-transform: none;
+}
+
+.notfound .lead {
+  margin: 12px 0 28px;
+  font-size: 18px;
+}
+
+.notfound .btn {
+  margin-top: 0;
 }
 
 .notfound .section {
